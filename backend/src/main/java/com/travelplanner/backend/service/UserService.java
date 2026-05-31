@@ -3,6 +3,8 @@ package com.travelplanner.backend.service;
 import com.travelplanner.backend.dto.UserRequest;
 import com.travelplanner.backend.dto.UserResponse;
 import com.travelplanner.backend.entity.User;
+import com.travelplanner.backend.exception.EmailAlreadyExistsException;
+import com.travelplanner.backend.exception.UserNotFoundException;
 import com.travelplanner.backend.mapper.UserMapper;
 import com.travelplanner.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -64,14 +66,13 @@ public class UserService {
   private User findByIdOrThrow(Long id) {
     return userRepository.findById(id)
         .orElseThrow(
-//            () -> new UserNotFoundException(id)
-        )
-        ;
+            () -> new UserNotFoundException(id)
+        );
   }
 
   private void validateEmailUnique(String email) {
     if (userRepository.existsByEmail(email)) {
-//      throw new EmailAlreadyExistsException(email);
+      throw new EmailAlreadyExistsException(email);
     }
   }
 
