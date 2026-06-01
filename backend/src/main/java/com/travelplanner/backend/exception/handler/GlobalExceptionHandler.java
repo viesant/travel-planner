@@ -4,6 +4,8 @@ import com.travelplanner.backend.exception.EmailAlreadyExistsException;
 import com.travelplanner.backend.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -52,6 +54,18 @@ public class GlobalExceptionHandler {
         );
 
     problemDetail.setProperty("invalid_fields", errors);
+
+    return problemDetail;
+  }
+
+  @ExceptionHandler({BadCredentialsException.class, UsernameNotFoundException.class})
+  public ProblemDetail handleAuthenticationFailures(RuntimeException ex) {
+    ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+        HttpStatus.UNAUTHORIZED,
+        "Invalid email or password."
+    );
+
+    problemDetail.setTitle("Authentication Failure");
 
     return problemDetail;
   }
