@@ -2,10 +2,12 @@ package com.travelplanner.backend.service;
 
 import com.travelplanner.backend.dto.LoginRequest;
 import com.travelplanner.backend.dto.LoginResponse;
+import com.travelplanner.backend.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,6 +28,13 @@ public class AuthService {
         );
 
     return tokenService.generateToken(authentication);
+  }
+
+  public User getAuthenticatedUser() {
+    Authentication auth =
+        SecurityContextHolder.getContext().getAuthentication();
+
+    return (User) auth.getPrincipal();
   }
 
 }
