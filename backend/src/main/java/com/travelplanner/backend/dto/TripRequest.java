@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public record TripRequest(
     @NotBlank(message = "Title is required")
-    String Title,
+    String title,
 
     String description,
 

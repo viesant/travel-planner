@@ -1,6 +1,8 @@
 package com.travelplanner.backend.exception.handler;
 
 import com.travelplanner.backend.exception.EmailAlreadyExistsException;
+import com.travelplanner.backend.exception.InvalidTripDatesException;
+import com.travelplanner.backend.exception.TripNotFoundException;
 import com.travelplanner.backend.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -16,23 +18,18 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-  @ExceptionHandler(UserNotFoundException.class)
-  public ProblemDetail handleUserNotFoundException(UserNotFoundException ex) {
-    ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
-        HttpStatus.NOT_FOUND,
-        ex.getMessage()
-    );
-    problemDetail.setTitle("Resource Not Found");
-    return problemDetail;
-  }
+  // =========================================================================
+  // HTTP STATUS 400 - BAD REQUEST
+  // =========================================================================
 
-  @ExceptionHandler(EmailAlreadyExistsException.class)
-  public ProblemDetail handleEmailAlreadyExistsException(EmailAlreadyExistsException ex) {
+  @ExceptionHandler(InvalidTripDatesException.class)
+  public ProblemDetail handleBadRequestException(RuntimeException ex) {
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
-        HttpStatus.CONFLICT,
+        HttpStatus.BAD_REQUEST,
         ex.getMessage()
     );
-    problemDetail.setTitle("Data Conflict");
+
+    problemDetail.setTitle("Bad Request");
     return problemDetail;
   }
 
@@ -58,8 +55,15 @@ public class GlobalExceptionHandler {
     return problemDetail;
   }
 
-  @ExceptionHandler({BadCredentialsException.class, UsernameNotFoundException.class})
-  public ProblemDetail handleAuthenticationFailures(RuntimeException ex) {
+  // =========================================================================
+  // HTTP STATUS 401 - UNAUTHORIZED
+  // =========================================================================
+
+  @ExceptionHandler({
+      BadCredentialsException.class,
+      UsernameNotFoundException.class
+  })
+  public ProblemDetail handleAuthenticationException(RuntimeException ex) {
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
         HttpStatus.UNAUTHORIZED,
         "Invalid email or password."
@@ -70,9 +74,43 @@ public class GlobalExceptionHandler {
     return problemDetail;
   }
 
+  // =========================================================================
+  // HTTP STATUS 404 - NOT FOUND
+  // =========================================================================
+
+  @ExceptionHandler({
+      UserNotFoundException.class,
+      TripNotFoundException.class
+  })
+  public ProblemDetail handleResourceNotFoundException(RuntimeException ex) {
+    ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+        HttpStatus.NOT_FOUND,
+        ex.getMessage()
+    );
+    problemDetail.setTitle("Resource Not Found");
+    return problemDetail;
+  }
+
+  // =========================================================================
+  // HTTP STATUS 409 - CONFLICT
+  // =========================================================================
+
+  @ExceptionHandler(EmailAlreadyExistsException.class)
+  public ProblemDetail handleEmailAlreadyExistsException(EmailAlreadyExistsException ex) {
+    ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+        HttpStatus.CONFLICT,
+        ex.getMessage()
+    );
+    problemDetail.setTitle("Data Conflict");
+    return problemDetail;
+  }
+
+  // =========================================================================
+  // HTTP STATUS 500 - INTERNAL SERVER ERROR
+  // =========================================================================
+
   @ExceptionHandler(Exception.class)
   public ProblemDetail handleUnexpectedException(Exception ex) {
-
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
         HttpStatus.INTERNAL_SERVER_ERROR,
         "An unexpected error occurred."

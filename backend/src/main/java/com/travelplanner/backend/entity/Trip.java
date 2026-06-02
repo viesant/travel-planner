@@ -21,7 +21,7 @@ public class Trip {
   @Column(nullable = false)
   private String title;
 
-  @Column(length = 1000)
+  @Column
   private String description;
 
   @Column
@@ -30,9 +30,15 @@ public class Trip {
   @Column
   private LocalDate endDate;
 
-
-
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
+
+  public Trip(String title, String description, LocalDate startDate, LocalDate endDate) {
+    this.title = title;
+    this.description = description;
+    this.startDate = startDate;
+    this.endDate = endDate;
+  }
+
 }
