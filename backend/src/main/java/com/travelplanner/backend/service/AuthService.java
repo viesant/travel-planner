@@ -3,6 +3,8 @@ package com.travelplanner.backend.service;
 import com.travelplanner.backend.dto.LoginRequest;
 import com.travelplanner.backend.dto.LoginResponse;
 import com.travelplanner.backend.entity.User;
+import com.travelplanner.backend.exception.AuthEmailNotFoundException;
+import com.travelplanner.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,8 +16,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final AuthenticationManager authenticationManager;
+  private final AuthenticationManager authenticationManager;
   private final TokenService tokenService;
+  private final UserRepository userRepository;
 
   public LoginResponse login(LoginRequest request) {
 
@@ -31,10 +34,15 @@ public class AuthService {
   }
 
   public User getAuthenticatedUser() {
-    Authentication auth =
-        SecurityContextHolder.getContext().getAuthentication();
+    String email =
+        SecurityContextHolder.getContext()
+            .getAuthentication()
+            .getName();
 
-    return (User) auth.getPrincipal();
+    return userRepository.findByEmail(email)
+        .orElseThrow(
+            () -> new AuthEmailNotFoundException(email)
+        );
   }
 
 }
