@@ -25,8 +25,7 @@ public class AccommodationService {
   private final TripService tripService;
 
   public AccommodationResponse create(AccommodationRequest request, Long tripId) {
-    User loggedUser = authService.getAuthenticatedUser();
-    Trip trip = tripService.findByIdAndUserOrThrow(tripId, loggedUser);
+    Trip trip = getValidatedTrip(tripId);
 
     validateAccommodationDates(request.checkInDate(), request.checkOutDate());
 
@@ -38,8 +37,7 @@ public class AccommodationService {
   }
 
   public List<AccommodationResponse> findAllByTrip(Long tripId) {
-    User loggedUser = authService.getAuthenticatedUser();
-    Trip trip = tripService.findByIdAndUserOrThrow(tripId, loggedUser);
+    Trip trip = getValidatedTrip(tripId);
 
     return accommodationRepository.findAllByTrip(trip)
         .stream()
@@ -47,7 +45,7 @@ public class AccommodationService {
         .toList();
   }
 
-  public AccommodationResponse findById(Long id, Long tripId) {
+  public AccommodationResponse findByIdAndTrip(Long id, Long tripId) {
     User loggedUser = authService.getAuthenticatedUser();
 
     Trip trip = tripService.findByIdAndUserOrThrow(tripId, loggedUser);
@@ -57,9 +55,8 @@ public class AccommodationService {
   }
 
   public AccommodationResponse update(Long id, Long tripId, AccommodationRequest request) {
-    User loggedUser = authService.getAuthenticatedUser();
+    Trip trip = getValidatedTrip(tripId);
 
-    Trip trip = tripService.findByIdAndUserOrThrow(tripId, loggedUser);
     Accommodation accommodation = findByIdAndTripOrThrow(id, trip);
 
     validateAccommodationDates(request.checkInDate(), request.checkOutDate());
@@ -71,12 +68,16 @@ public class AccommodationService {
   }
 
   public void delete(Long id, Long tripId) {
-    User loggedUser = authService.getAuthenticatedUser();
+    Trip trip = getValidatedTrip(tripId);
 
-    Trip trip = tripService.findByIdAndUserOrThrow(tripId, loggedUser);
     Accommodation accommodation = findByIdAndTripOrThrow(id, trip);
 
     accommodationRepository.delete(accommodation);
+  }
+
+  private Trip getValidatedTrip(Long tripId) {
+    User loggedUser = authService.getAuthenticatedUser();
+    return tripService.findByIdAndUserOrThrow(tripId, loggedUser);
   }
 
   private Accommodation findByIdAndTripOrThrow(Long id, Trip trip) {
