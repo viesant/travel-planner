@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record AccommodationResponse(
+    Long id,
     String name,
     String location,
     String address,

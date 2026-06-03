@@ -24,7 +24,7 @@ public class AccommodationService {
   private final AuthService authService;
   private final TripService tripService;
 
-  public AccommodationResponse create(AccommodationRequest request, Long tripId) {
+  public AccommodationResponse create(Long tripId, AccommodationRequest request) {
     Trip trip = getValidatedTrip(tripId);
 
     validateAccommodationDates(request.checkInDate(), request.checkOutDate());
@@ -45,16 +45,14 @@ public class AccommodationService {
         .toList();
   }
 
-  public AccommodationResponse findByIdAndTrip(Long id, Long tripId) {
-    User loggedUser = authService.getAuthenticatedUser();
-
-    Trip trip = tripService.findByIdAndUserOrThrow(tripId, loggedUser);
+  public AccommodationResponse findById(Long tripId, Long id) {
+    Trip trip = getValidatedTrip(tripId);
     Accommodation accommodation = findByIdAndTripOrThrow(id, trip);
 
     return accommodationMapper.toResponse(accommodation);
   }
 
-  public AccommodationResponse update(Long id, Long tripId, AccommodationRequest request) {
+  public AccommodationResponse update(Long tripId, Long id, AccommodationRequest request) {
     Trip trip = getValidatedTrip(tripId);
 
     Accommodation accommodation = findByIdAndTripOrThrow(id, trip);
@@ -67,7 +65,7 @@ public class AccommodationService {
     return accommodationMapper.toResponse(savedAccommodation);
   }
 
-  public void delete(Long id, Long tripId) {
+  public void delete(Long tripId, Long id) {
     Trip trip = getValidatedTrip(tripId);
 
     Accommodation accommodation = findByIdAndTripOrThrow(id, trip);

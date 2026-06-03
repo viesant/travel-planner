@@ -23,6 +23,7 @@ public class AccommodationMapper {
 
   public AccommodationResponse toResponse(Accommodation accommodation) {
     return new AccommodationResponse(
+        accommodation.getId(),
         accommodation.getName(),
         accommodation.getLocation(),
         accommodation.getAddress(),
