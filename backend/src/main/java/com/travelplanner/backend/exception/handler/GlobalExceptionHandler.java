@@ -37,10 +37,6 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ProblemDetail handleMalformedJsonException(HttpMessageNotReadableException ex) {
 
-    Throwable rootCause = ex.getMostSpecificCause();
-
-    String detail = "Request contains invalid format.";
-
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
         HttpStatus.BAD_REQUEST,
         "Request contains invalid format."
@@ -127,15 +123,15 @@ public class GlobalExceptionHandler {
   // HTTP STATUS 500 - INTERNAL SERVER ERROR
   // =========================================================================
 
-//  @ExceptionHandler(Exception.class)
-//  public ProblemDetail handleUnexpectedException(Exception ex) {
-//    ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
-//        HttpStatus.INTERNAL_SERVER_ERROR,
-//        "An unexpected error occurred."
-//    );
-//
-//    problemDetail.setTitle("Internal Server Error");
-//
-//    return problemDetail;
-//  }
+  @ExceptionHandler(Exception.class)
+  public ProblemDetail handleUnexpectedException(Exception ex) {
+    ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        "An unexpected error occurred."
+    );
+
+    problemDetail.setTitle("Internal Server Error");
+
+    return problemDetail;
+  }
 }
