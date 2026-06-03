@@ -24,8 +24,7 @@ public class Transport {
   @Column(nullable = false)
   private TransportType type;
 
-  @Column
-  private String carrier; // Nome da empresa (Ex: LATAM, Eurostar, FlixBus)
+  private String carrier;
 
   @Column(nullable = false)
   private String departureLocation;
@@ -38,7 +37,9 @@ public class Transport {
   @Column(columnDefinition = "TEXT")
   private String arrivalAddress;
 
+  @Column(nullable = false)
   private LocalDateTime departureDateTime;
+  @Column(nullable = false)
   private LocalDateTime arrivalDateTime;
 
   private String bookingNumber;
