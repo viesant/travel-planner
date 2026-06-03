@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AccommodationMapper {
 
-  public Accommodation toEntity(AccommodationRequest request){
+  public Accommodation toEntity(AccommodationRequest request) {
     return Accommodation.builder()
         .name(request.name())
         .location(request.location())
@@ -21,7 +21,7 @@ public class AccommodationMapper {
         .build();
   }
 
-  public AccommodationResponse toResponse(Accommodation accommodation){
+  public AccommodationResponse toResponse(Accommodation accommodation) {
     return new AccommodationResponse(
         accommodation.getName(),
         accommodation.getLocation(),
@@ -34,4 +34,16 @@ public class AccommodationMapper {
         accommodation.getTrip().getId()
     );
   }
+
+  public void updateEntityFromRequest(Accommodation accommodation, AccommodationRequest request) {
+    accommodation.setName(request.name());
+    accommodation.setLocation(request.location());
+    accommodation.setAddress(request.address());
+    accommodation.setBookingNumber(request.bookingNumber());
+    accommodation.setCheckInDate(request.checkInDate());
+    accommodation.setCheckOutDate(request.checkOutDate());
+    accommodation.setPrice(request.price());
+    accommodation.setNotes(request.notes());
+  }
+
 }

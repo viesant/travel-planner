@@ -1,9 +1,6 @@
 package com.travelplanner.backend.exception.handler;
 
-import com.travelplanner.backend.exception.EmailAlreadyExistsException;
-import com.travelplanner.backend.exception.InvalidTripDatesException;
-import com.travelplanner.backend.exception.TripNotFoundException;
-import com.travelplanner.backend.exception.UserNotFoundException;
+import com.travelplanner.backend.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -22,7 +19,10 @@ public class GlobalExceptionHandler {
   // HTTP STATUS 400 - BAD REQUEST
   // =========================================================================
 
-  @ExceptionHandler(InvalidTripDatesException.class)
+  @ExceptionHandler({
+      InvalidTripDatesException.class,
+      InvalidAccommodationDatesException.class
+  })
   public ProblemDetail handleBadRequestException(RuntimeException ex) {
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
         HttpStatus.BAD_REQUEST,
@@ -80,7 +80,8 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler({
       UserNotFoundException.class,
-      TripNotFoundException.class
+      TripNotFoundException.class,
+      AccommodationNotFoundException.class
   })
   public ProblemDetail handleResourceNotFoundException(RuntimeException ex) {
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(

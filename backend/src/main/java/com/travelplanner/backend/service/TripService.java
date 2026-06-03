@@ -76,7 +76,7 @@ public class TripService {
     tripRepository.delete(trip);
   }
 
-  private Trip findByIdAndUserOrThrow(Long id, User user) {
+  protected Trip findByIdAndUserOrThrow(Long id, User user) {
     return tripRepository.findByIdAndUser(id, user)
         .orElseThrow(
             () -> new TripNotFoundException(id)

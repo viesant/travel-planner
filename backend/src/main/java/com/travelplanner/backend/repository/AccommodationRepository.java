@@ -6,8 +6,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AccommodationRepository extends JpaRepository<Accommodation,Long> {
   List<Accommodation> findAllByTrip(Trip trip);
+
+  Optional<Accommodation> findByIdAndTrip(Long id, Trip trip);
+
+  Optional<Accommodation> findByIdAndTrip_Id(Long id, Long tripId);
+
+  Long trip(Trip trip);
+
 }
