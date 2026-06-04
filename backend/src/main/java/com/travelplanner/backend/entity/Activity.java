@@ -1,6 +1,5 @@
 package com.travelplanner.backend.entity;
 
-import com.travelplanner.backend.enums.TransportType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,38 +7,30 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "transports")
+@Table(name = "activities")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Transport {
+public class Activity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Enumerated(EnumType.STRING)
   @Column(nullable = false)
-  private TransportType type;
+  private String name;
 
-  private String carrier;
+  private String location;
 
-  @Column(nullable = false)
-  private String departureLocation;
   @Column(columnDefinition = "TEXT")
-  private String departureAddress;
+  private String address;
 
   @Column(nullable = false)
-  private String arrivalLocation;
-  @Column(columnDefinition = "TEXT")
-  private String arrivalAddress;
-
+  private LocalDateTime startDateTime;
   @Column(nullable = false)
-  private LocalDateTime departureDateTime;
-  @Column(nullable = false)
-  private LocalDateTime arrivalDateTime;
+  private LocalDateTime endDateTime;
 
   private String bookingNumber;
 
