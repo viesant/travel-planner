@@ -6,9 +6,11 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +24,8 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler({
       InvalidTripDatesException.class,
-      InvalidAccommodationDatesException.class
+      InvalidAccommodationDatesException.class,
+      InvalidTransportDatesException.class
   })
   public ProblemDetail handleBadRequestException(RuntimeException ex) {
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
@@ -94,7 +97,8 @@ public class GlobalExceptionHandler {
   @ExceptionHandler({
       UserNotFoundException.class,
       TripNotFoundException.class,
-      AccommodationNotFoundException.class
+      AccommodationNotFoundException.class,
+      TransportNotFoundException.class
   })
   public ProblemDetail handleResourceNotFoundException(RuntimeException ex) {
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
@@ -102,6 +106,30 @@ public class GlobalExceptionHandler {
         ex.getMessage()
     );
     problemDetail.setTitle("Resource Not Found");
+    return problemDetail;
+  }
+
+  @ExceptionHandler(NoResourceFoundException.class)
+  public ProblemDetail handleRouteNotFoundException(NoResourceFoundException ex) {
+    ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+        HttpStatus.NOT_FOUND,
+        "The URL path '/" + ex.getResourcePath() + "' does not exist on this server."
+    );
+    problemDetail.setTitle("Route Not Found");
+    return problemDetail;
+  }
+
+  // =========================================================================
+  // HTTP STATUS 405 - METHOD NOT ALLOWED
+  // =========================================================================
+
+  @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+  public ProblemDetail handleMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
+    ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+        HttpStatus.METHOD_NOT_ALLOWED,
+        "The HTTP method '" + ex.getMethod() + "' is not supported for this URL."
+    );
+    problemDetail.setTitle("Method Not Allowed");
     return problemDetail;
   }
 
@@ -125,13 +153,15 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(Exception.class)
   public ProblemDetail handleUnexpectedException(Exception ex) {
+
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
         HttpStatus.INTERNAL_SERVER_ERROR,
-        "An unexpected error occurred."
+        "An unexpected error occurred. :" + ex
     );
 
     problemDetail.setTitle("Internal Server Error");
 
     return problemDetail;
   }
+
 }

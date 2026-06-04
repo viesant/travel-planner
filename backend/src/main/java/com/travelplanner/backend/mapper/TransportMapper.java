@@ -44,6 +44,7 @@ public class TransportMapper {
 
   public void updateEntityFromRequest(Transport transport, TransportRequest request) {
     transport.setType(request.type());
+    transport.setCarrier(request.carrier());
     transport.setDepartureLocation(request.departureLocation());
     transport.setDepartureAddress(request.departureAddress());
     transport.setArrivalLocation(request.arrivalLocation());

@@ -2,13 +2,14 @@ package com.travelplanner.backend.dto;
 
 import com.travelplanner.backend.enums.TransportType;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record TransportRequest(
 
-    @NotBlank(message = "Transport type is required")
+    @NotNull(message = "Transport type is required")
     TransportType type,
 
     String carrier,
@@ -21,9 +22,9 @@ public record TransportRequest(
     String arrivalLocation,
     String arrivalAddress,
 
-    @NotBlank(message = "Departure date/time is required")
+    @NotNull(message = "Departure date/time is required")
     LocalDateTime departureDateTime,
-    @NotBlank(message = "Arrival date/time is required")
+    @NotNull(message = "Arrival date/time is required")
     LocalDateTime arrivalDateTime,
 
     String bookingNumber,

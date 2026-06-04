@@ -4,7 +4,6 @@ import com.travelplanner.backend.dto.AccommodationRequest;
 import com.travelplanner.backend.dto.AccommodationResponse;
 import com.travelplanner.backend.entity.Accommodation;
 import com.travelplanner.backend.entity.Trip;
-import com.travelplanner.backend.entity.User;
 import com.travelplanner.backend.exception.AccommodationNotFoundException;
 import com.travelplanner.backend.exception.InvalidAccommodationDatesException;
 import com.travelplanner.backend.mapper.AccommodationMapper;
@@ -21,11 +20,10 @@ public class AccommodationService {
 
   private final AccommodationRepository accommodationRepository;
   private final AccommodationMapper accommodationMapper;
-  private final AuthService authService;
   private final TripService tripService;
 
   public AccommodationResponse create(Long tripId, AccommodationRequest request) {
-    Trip trip = getValidatedTrip(tripId);
+    Trip trip = tripService.getValidatedTrip(tripId);
 
     validateAccommodationDates(request.checkInDate(), request.checkOutDate());
 
@@ -37,7 +35,7 @@ public class AccommodationService {
   }
 
   public List<AccommodationResponse> findAllByTrip(Long tripId) {
-    Trip trip = getValidatedTrip(tripId);
+    Trip trip = tripService.getValidatedTrip(tripId);
 
     return accommodationRepository.findAllByTrip(trip)
         .stream()
@@ -46,14 +44,14 @@ public class AccommodationService {
   }
 
   public AccommodationResponse findById(Long tripId, Long id) {
-    Trip trip = getValidatedTrip(tripId);
+    Trip trip = tripService.getValidatedTrip(tripId);
     Accommodation accommodation = findByIdAndTripOrThrow(id, trip);
 
     return accommodationMapper.toResponse(accommodation);
   }
 
   public AccommodationResponse update(Long tripId, Long id, AccommodationRequest request) {
-    Trip trip = getValidatedTrip(tripId);
+    Trip trip = tripService.getValidatedTrip(tripId);
 
     Accommodation accommodation = findByIdAndTripOrThrow(id, trip);
 
@@ -66,16 +64,11 @@ public class AccommodationService {
   }
 
   public void delete(Long tripId, Long id) {
-    Trip trip = getValidatedTrip(tripId);
+    Trip trip = tripService.getValidatedTrip(tripId);
 
     Accommodation accommodation = findByIdAndTripOrThrow(id, trip);
 
     accommodationRepository.delete(accommodation);
-  }
-
-  private Trip getValidatedTrip(Long tripId) {
-    User loggedUser = authService.getAuthenticatedUser();
-    return tripService.findByIdAndUserOrThrow(tripId, loggedUser);
   }
 
   private Accommodation findByIdAndTripOrThrow(Long id, Trip trip) {

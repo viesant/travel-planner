@@ -46,17 +46,13 @@ public class TripService {
   }
 
   public TripResponse findById(Long id) {
-    User loggedUser = authService.getAuthenticatedUser();
-
-    Trip trip = findByIdAndUserOrThrow(id, loggedUser);
+    Trip trip = getValidatedTrip(id);
 
     return tripMapper.toResponse(trip);
   }
 
   public TripResponse update(Long id, TripRequest request) {
-    User loggedUser = authService.getAuthenticatedUser();
-
-    Trip trip = findByIdAndUserOrThrow(id, loggedUser);
+    Trip trip = getValidatedTrip(id);
 
     validateTripDates(request.startDate(), request.endDate());
 
@@ -70,13 +66,12 @@ public class TripService {
   }
 
   public void delete(Long id) {
-    User loggedUser = authService.getAuthenticatedUser();
-    Trip trip = findByIdAndUserOrThrow(id, loggedUser);
 
+    Trip trip = getValidatedTrip(id);
     tripRepository.delete(trip);
   }
 
-  protected Trip findByIdAndUserOrThrow(Long id, User user) {
+  private Trip findByIdAndUserOrThrow(Long id, User user) {
     return tripRepository.findByIdAndUser(id, user)
         .orElseThrow(
             () -> new TripNotFoundException(id)
@@ -87,6 +82,11 @@ public class TripService {
     if (start != null && end != null && end.isBefore(start)) {
       throw new InvalidTripDatesException();
     }
+  }
+
+  protected Trip getValidatedTrip(Long tripId) {
+    User loggedUser = authService.getAuthenticatedUser();
+    return findByIdAndUserOrThrow(tripId, loggedUser);
   }
 
 }
