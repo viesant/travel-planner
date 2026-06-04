@@ -1,6 +1,7 @@
 package com.travelplanner.backend.exception.handler;
 
 import com.travelplanner.backend.exception.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -25,7 +27,8 @@ public class GlobalExceptionHandler {
   @ExceptionHandler({
       InvalidTripDatesException.class,
       InvalidAccommodationDatesException.class,
-      InvalidTransportDatesException.class
+      InvalidTransportDatesException.class,
+      InvalidActivityDatesException.class
   })
   public ProblemDetail handleBadRequestException(RuntimeException ex) {
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
@@ -98,7 +101,8 @@ public class GlobalExceptionHandler {
       UserNotFoundException.class,
       TripNotFoundException.class,
       AccommodationNotFoundException.class,
-      TransportNotFoundException.class
+      TransportNotFoundException.class,
+      ActivityNotFoundException.class
   })
   public ProblemDetail handleResourceNotFoundException(RuntimeException ex) {
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
@@ -154,9 +158,11 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(Exception.class)
   public ProblemDetail handleUnexpectedException(Exception ex) {
 
+    log.error("Unexpected error", ex);
+
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
         HttpStatus.INTERNAL_SERVER_ERROR,
-        "An unexpected error occurred. :" + ex
+        "An unexpected error occurred. :"
     );
 
     problemDetail.setTitle("Internal Server Error");

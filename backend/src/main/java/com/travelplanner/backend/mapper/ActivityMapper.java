@@ -35,7 +35,7 @@ public class ActivityMapper {
     );
   }
 
-  public void updateEntityFromRequest(Activity activity, ActivityRequest request){
+  public void updateEntityFromRequest(Activity activity, ActivityRequest request) {
     activity.setName(request.name());
     activity.setLocation(request.location());
     activity.setAddress(request.address());
@@ -45,7 +45,5 @@ public class ActivityMapper {
     activity.setPrice(request.price());
     activity.setNotes(request.notes());
   }
-
-
 
 }

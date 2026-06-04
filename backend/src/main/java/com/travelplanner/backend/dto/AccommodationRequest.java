@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record AccommodationRequest(
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Accommodation name is required")
     String name,
 
     String location,
