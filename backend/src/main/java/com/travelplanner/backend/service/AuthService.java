@@ -3,7 +3,7 @@ package com.travelplanner.backend.service;
 import com.travelplanner.backend.dto.LoginRequest;
 import com.travelplanner.backend.dto.LoginResponse;
 import com.travelplanner.backend.entity.User;
-import com.travelplanner.backend.exception.AuthEmailNotFoundException;
+import com.travelplanner.backend.exception.ResourceNotFoundException;
 import com.travelplanner.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,15 +34,26 @@ public class AuthService {
   }
 
   public User getAuthenticatedUser() {
-    String email =
-        SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getName();
+    String strId = SecurityContextHolder.getContext()
+        .getAuthentication()
+        .getName();
 
-    return userRepository.findByEmail(email)
+    Long id = Long.parseLong(strId);
+
+    return userRepository.findById(id)
         .orElseThrow(
-            () -> new AuthEmailNotFoundException(email)
+            () -> new ResourceNotFoundException("Logged user", id)
         );
+
+//    String email =
+//        SecurityContextHolder.getContext()
+//            .getAuthentication()
+//            .getName();
+
+//    return userRepository.findByEmail(email)
+//        .orElseThrow(
+//            () -> new AuthEmailNotFoundException(email)
+//        );
   }
 
 }

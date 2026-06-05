@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -75,10 +74,7 @@ public class GlobalExceptionHandler {
   // HTTP STATUS 401 - UNAUTHORIZED
   // =========================================================================
 
-  @ExceptionHandler({
-      BadCredentialsException.class,
-      UsernameNotFoundException.class
-  })
+  @ExceptionHandler(BadCredentialsException.class)
   public ProblemDetail handleAuthenticationException(RuntimeException ex) {
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
         HttpStatus.UNAUTHORIZED,

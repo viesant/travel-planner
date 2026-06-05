@@ -1,6 +1,5 @@
 package com.travelplanner.backend.service;
 
-import com.travelplanner.backend.exception.AuthEmailNotFoundException;
 import com.travelplanner.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,9 +17,8 @@ public class CustomUserDetailsService implements UserDetailsService {
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     return userRepository.findByEmail(email)
         .orElseThrow(
-            () -> new AuthEmailNotFoundException(email)
+            () -> new UsernameNotFoundException(email)
         );
   }
 
 }
-
