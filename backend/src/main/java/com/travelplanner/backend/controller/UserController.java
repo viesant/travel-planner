@@ -25,7 +25,7 @@ public class UserController {
     URI uri = ServletUriComponentsBuilder
         .fromCurrentRequest()
         .path("/me")
-        .buildAndExpand(response.id())
+        .build()
         .toUri();
     return ResponseEntity.created(uri).body(response);
   }

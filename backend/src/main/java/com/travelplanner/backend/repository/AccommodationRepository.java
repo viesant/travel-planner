@@ -14,6 +14,4 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
 
   Optional<Accommodation> findByIdAndTrip(Long id, Trip trip);
 
-  Long trip(Trip trip);
-
 }
