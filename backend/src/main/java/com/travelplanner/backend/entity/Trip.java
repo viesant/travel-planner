@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "trips")
@@ -33,6 +34,15 @@ public class Trip {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
+
+  @OneToMany(mappedBy = "trip", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Accommodation> accommodations;
+
+  @OneToMany(mappedBy = "trip", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Activity> activities;
+
+  @OneToMany(mappedBy = "trip", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Transport> transports;
 
   public Trip(String title, String description, LocalDate startDate, LocalDate endDate) {
     this.title = title;
