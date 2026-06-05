@@ -3,16 +3,20 @@ package com.travelplanner.backend.mapper;
 import com.travelplanner.backend.dto.UserRequest;
 import com.travelplanner.backend.dto.UserResponse;
 import com.travelplanner.backend.entity.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class UserMapper {
+  private final PasswordEncoder passwordEncoder;
 
   public User toEntity(UserRequest request) {
     return new User(
         request.name(),
         request.email(),
-        request.password()
+        passwordEncoder.encode(request.password())
     );
   }
 
@@ -27,7 +31,7 @@ public class UserMapper {
   public void updateEntityFromRequest(User user, UserRequest request) {
     user.setName(request.name());
     user.setEmail(request.email());
-    user.setPassword(request.password());
+    user.setPassword(passwordEncoder.encode(request.password()));
   }
 
 }
