@@ -1,6 +1,8 @@
 package com.travelplanner.backend.exception.handler;
 
-import com.travelplanner.backend.exception.*;
+import com.travelplanner.backend.exception.EmailAlreadyExistsException;
+import com.travelplanner.backend.exception.InvalidDatesException;
+import com.travelplanner.backend.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -24,12 +26,7 @@ public class GlobalExceptionHandler {
   // HTTP STATUS 400 - BAD REQUEST
   // =========================================================================
 
-  @ExceptionHandler({
-      InvalidTripDatesException.class,
-      InvalidAccommodationDatesException.class,
-      InvalidTransportDatesException.class,
-      InvalidActivityDatesException.class
-  })
+  @ExceptionHandler(InvalidDatesException.class)
   public ProblemDetail handleBadRequestException(RuntimeException ex) {
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
         HttpStatus.BAD_REQUEST,
@@ -97,14 +94,8 @@ public class GlobalExceptionHandler {
   // HTTP STATUS 404 - NOT FOUND
   // =========================================================================
 
-  @ExceptionHandler({
-      UserNotFoundException.class,
-      TripNotFoundException.class,
-      AccommodationNotFoundException.class,
-      TransportNotFoundException.class,
-      ActivityNotFoundException.class
-  })
-  public ProblemDetail handleResourceNotFoundException(RuntimeException ex) {
+  @ExceptionHandler(ResourceNotFoundException.class)
+  public ProblemDetail handleResourceNotFoundException(ResourceNotFoundException ex) {
     ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
         HttpStatus.NOT_FOUND,
         ex.getMessage()

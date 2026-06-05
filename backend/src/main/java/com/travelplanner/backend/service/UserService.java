@@ -4,7 +4,7 @@ import com.travelplanner.backend.dto.UserRequest;
 import com.travelplanner.backend.dto.UserResponse;
 import com.travelplanner.backend.entity.User;
 import com.travelplanner.backend.exception.EmailAlreadyExistsException;
-import com.travelplanner.backend.exception.UserNotFoundException;
+import com.travelplanner.backend.exception.ResourceNotFoundException;
 import com.travelplanner.backend.mapper.UserMapper;
 import com.travelplanner.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,8 +50,8 @@ public class UserService {
       validateEmailUnique(request.email());
     }
 
-    user.setName(request.name());
-    user.setEmail(request.email());
+    userMapper.updateEntityFromRequest(user, request);
+
     user.setPassword(passwordEncoder.encode(request.password()));
 
     User savedUser = userRepository.save(user);
@@ -66,7 +66,7 @@ public class UserService {
   private User findByIdOrThrow(Long id) {
     return userRepository.findById(id)
         .orElseThrow(
-            () -> new UserNotFoundException(id)
+            () -> new ResourceNotFoundException("User", id)
         );
   }
 

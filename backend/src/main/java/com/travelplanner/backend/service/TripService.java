@@ -4,8 +4,8 @@ import com.travelplanner.backend.dto.TripRequest;
 import com.travelplanner.backend.dto.TripResponse;
 import com.travelplanner.backend.entity.Trip;
 import com.travelplanner.backend.entity.User;
-import com.travelplanner.backend.exception.InvalidTripDatesException;
-import com.travelplanner.backend.exception.TripNotFoundException;
+import com.travelplanner.backend.exception.InvalidDatesException;
+import com.travelplanner.backend.exception.ResourceNotFoundException;
 import com.travelplanner.backend.mapper.TripMapper;
 import com.travelplanner.backend.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
@@ -56,10 +56,7 @@ public class TripService {
 
     validateTripDates(request.startDate(), request.endDate());
 
-    trip.setTitle(request.title());
-    trip.setDescription(request.description());
-    trip.setStartDate(request.startDate());
-    trip.setEndDate(request.endDate());
+    tripMapper.updateEntityFromRequest(trip, request);
 
     Trip savedTrip = tripRepository.save(trip);
     return tripMapper.toResponse(savedTrip);
@@ -74,13 +71,13 @@ public class TripService {
   private Trip findByIdAndUserOrThrow(Long id, User user) {
     return tripRepository.findByIdAndUser(id, user)
         .orElseThrow(
-            () -> new TripNotFoundException(id)
+            () -> new ResourceNotFoundException("Trip",id)
         );
   }
 
   private void validateTripDates(LocalDate start, LocalDate end) {
     if (start != null && end != null && end.isBefore(start)) {
-      throw new InvalidTripDatesException();
+      throw new InvalidDatesException("End date cannot be before start date.");
     }
   }
 

@@ -4,8 +4,8 @@ import com.travelplanner.backend.dto.AccommodationRequest;
 import com.travelplanner.backend.dto.AccommodationResponse;
 import com.travelplanner.backend.entity.Accommodation;
 import com.travelplanner.backend.entity.Trip;
-import com.travelplanner.backend.exception.AccommodationNotFoundException;
-import com.travelplanner.backend.exception.InvalidAccommodationDatesException;
+import com.travelplanner.backend.exception.InvalidDatesException;
+import com.travelplanner.backend.exception.ResourceNotFoundException;
 import com.travelplanner.backend.mapper.AccommodationMapper;
 import com.travelplanner.backend.repository.AccommodationRepository;
 import lombok.RequiredArgsConstructor;
@@ -74,13 +74,13 @@ public class AccommodationService {
   private Accommodation findByIdAndTripOrThrow(Long id, Trip trip) {
     return accommodationRepository.findByIdAndTrip(id, trip)
         .orElseThrow(
-            () -> new AccommodationNotFoundException(id)
+            () -> new ResourceNotFoundException("Accommodation", id)
         );
   }
 
   private void validateAccommodationDates(LocalDate checkIn, LocalDate checkOut) {
     if (checkIn != null && checkOut != null && checkOut.isBefore(checkIn)) {
-      throw new InvalidAccommodationDatesException();
+      throw new InvalidDatesException("Check-out date cannot be before check-in date.");
     }
   }
 

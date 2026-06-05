@@ -27,13 +27,12 @@ public class Accommodation {
   @Column(columnDefinition = "TEXT")
   private String address;
 
-  @Column(name = "booking_number")
   private String bookingNumber;
 
-  @Column(nullable = false, name = "check_in_date")
+  @Column(nullable = false)
   private LocalDate checkInDate;
 
-  @Column(nullable = false, name = "check_out_date")
+  @Column(nullable = false)
   private LocalDate checkOutDate;
 
   @Column(precision = 10, scale = 2)

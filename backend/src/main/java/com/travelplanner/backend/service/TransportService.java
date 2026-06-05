@@ -4,8 +4,8 @@ import com.travelplanner.backend.dto.TransportRequest;
 import com.travelplanner.backend.dto.TransportResponse;
 import com.travelplanner.backend.entity.Transport;
 import com.travelplanner.backend.entity.Trip;
-import com.travelplanner.backend.exception.InvalidTransportDatesException;
-import com.travelplanner.backend.exception.TransportNotFoundException;
+import com.travelplanner.backend.exception.InvalidDatesException;
+import com.travelplanner.backend.exception.ResourceNotFoundException;
 import com.travelplanner.backend.mapper.TransportMapper;
 import com.travelplanner.backend.repository.TransportRepository;
 import lombok.RequiredArgsConstructor;
@@ -70,13 +70,13 @@ public class TransportService {
   private Transport findByIdAndTripOrThrow(Long id, Trip trip) {
     return transportRepository.findByIdAndTrip(id, trip)
         .orElseThrow(
-            () -> new TransportNotFoundException(id)
+            () -> new ResourceNotFoundException("Transport", id)
         );
   }
 
   private void validateTransportDates(LocalDateTime departure, LocalDateTime arrival) {
     if (departure != null && arrival != null && arrival.isBefore(departure)) {
-      throw new InvalidTransportDatesException();
+      throw new InvalidDatesException("Arrival date and time cannot be before departure date and time");
     }
   }
 

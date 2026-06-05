@@ -4,8 +4,8 @@ import com.travelplanner.backend.dto.ActivityRequest;
 import com.travelplanner.backend.dto.ActivityResponse;
 import com.travelplanner.backend.entity.Activity;
 import com.travelplanner.backend.entity.Trip;
-import com.travelplanner.backend.exception.ActivityNotFoundException;
-import com.travelplanner.backend.exception.InvalidActivityDatesException;
+import com.travelplanner.backend.exception.InvalidDatesException;
+import com.travelplanner.backend.exception.ResourceNotFoundException;
 import com.travelplanner.backend.mapper.ActivityMapper;
 import com.travelplanner.backend.repository.ActivityRepository;
 import lombok.RequiredArgsConstructor;
@@ -70,13 +70,13 @@ public class ActivityService {
   private Activity findByIdAndTripOrThrow(Long id, Trip trip) {
     return activityRepository.findByIdAndTrip(id, trip)
         .orElseThrow(
-            () -> new ActivityNotFoundException(id)
+            () -> new ResourceNotFoundException("Activity", id)
         );
   }
 
   private void validateActivityDates(LocalDateTime start, LocalDateTime end) {
     if (start != null && end != null && end.isBefore(start)) {
-      throw new InvalidActivityDatesException();
+      throw new InvalidDatesException("End date/time cannot be before start date/time");
     }
   }
 

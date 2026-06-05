@@ -24,4 +24,10 @@ public class UserMapper {
     );
   }
 
+  public void updateEntityFromRequest(User user, UserRequest request) {
+    user.setName(request.name());
+    user.setEmail(request.email());
+    user.setPassword(request.password());
+  }
+
 }

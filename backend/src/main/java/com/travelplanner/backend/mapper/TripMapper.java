@@ -24,8 +24,14 @@ public class TripMapper {
         trip.getDescription(),
         trip.getStartDate(),
         trip.getEndDate()
-//        trip.getUser()
     );
+  }
+
+  public void updateEntityFromRequest(Trip trip, TripRequest request) {
+    trip.setTitle(request.title());
+    trip.setDescription(request.description());
+    trip.setStartDate(request.startDate());
+    trip.setEndDate(request.endDate());
   }
 
 }
