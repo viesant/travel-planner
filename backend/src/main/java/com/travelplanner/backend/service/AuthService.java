@@ -42,19 +42,8 @@ public class AuthService {
 
     return userRepository.findById(id)
         .orElseThrow(
-//            () -> new ResourceNotFoundException("Logged user", id)
             () -> new UsernameNotFoundException("User no longer exists")
         );
-
-//    String email =
-//        SecurityContextHolder.getContext()
-//            .getAuthentication()
-//            .getName();
-
-//    return userRepository.findByEmail(email)
-//        .orElseThrow(
-//            () -> new AuthEmailNotFoundException(email)
-//        );
   }
 
 }
