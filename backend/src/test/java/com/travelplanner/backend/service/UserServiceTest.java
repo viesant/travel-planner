@@ -95,6 +95,7 @@ public class UserServiceTest {
     assertEquals(userId, result.id());
     assertEquals(validRequest.name(), result.name());
     verify(userMapper, times(1)).updateEntityFromRequest(user, validRequest);
+    verify(userRepository, never()).existsByEmail(anyString());
   }
 
   @Test
