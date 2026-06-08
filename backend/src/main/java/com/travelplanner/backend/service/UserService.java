@@ -7,7 +7,6 @@ import com.travelplanner.backend.exception.EmailAlreadyExistsException;
 import com.travelplanner.backend.mapper.UserMapper;
 import com.travelplanner.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,7 +16,6 @@ public class UserService {
   private final UserRepository userRepository;
   private final UserMapper userMapper;
   private final AuthService authService;
-  private final PasswordEncoder passwordEncoder;
 
   public UserResponse create(UserRequest request) {
     validateEmailUnique(request.email());
