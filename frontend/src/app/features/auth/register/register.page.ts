@@ -8,7 +8,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/auth/services/auth.service';
 import { RegisterRequest } from '../models/register-request';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { ProblemDetails } from '../../../shared/models/problem-details';
+import { ProblemDetails } from '../../../shared/models/problem-details.model';
 
 @Component({
   selector: 'app-register',

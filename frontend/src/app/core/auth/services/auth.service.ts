@@ -4,7 +4,7 @@ import { AuthRequest } from '../../../features/auth/models/auth-request';
 import { Observable, tap } from 'rxjs';
 import { AuthResponse } from '../../../features/auth/models/auth-response';
 import { RegisterRequest } from '../../../features/auth/models/register-request';
-import { User } from '../../../shared/models/user';
+import { User } from '../../../shared/models/user.model';
 
 @Injectable({
   providedIn: 'root',

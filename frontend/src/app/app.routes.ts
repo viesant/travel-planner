@@ -25,6 +25,16 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'trips/new',
+    loadComponent: () => import('./features/trips/create/create.page').then((m) => m.CreatePage),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'trips/:id',
+    loadComponent: () => import('./features/trips/detail/detail.page').then((m) => m.DetailPage),
+    canActivate: [authGuard],
+  },
+  {
     path: '**',
     redirectTo: 'trips',
     pathMatch: 'full',

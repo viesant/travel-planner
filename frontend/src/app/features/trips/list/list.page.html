@@ -1,1 +1,47 @@
-<p>list works!</p>
+<div class="header">
+  <h2>My Trips</h2>
+
+  <button mat-flat-button (click)="openCreateTrip()">+ New Trip</button>
+</div>
+
+@if (isLoading()) {
+  <div class="center">
+    <mat-spinner></mat-spinner>
+  </div>
+}
+
+@if (errorMessage()) {
+  <mat-card class="error">
+    <mat-card-content>
+      {{ errorMessage() }}
+    </mat-card-content>
+  </mat-card>
+}
+
+@if (!isLoading() && trips().length === 0) {
+  <mat-card class="empty">
+    <mat-card-content>No trips found</mat-card-content>
+  </mat-card>
+}
+
+<div class="trip-grid">
+  @for (trip of trips(); track trip.id) {
+    <mat-card class="trip-card">
+      <mat-card-header>
+        <mat-card-title>
+          {{ trip.title }}
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p>{{ trip.description }}</p>
+
+        <p class="dates">📅 {{ trip.startDate }} → {{ trip.endDate }}</p>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-stroked-button (click)="openTripDetail(trip.id)">View</button>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>
