@@ -1,25 +1,32 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { Router } from '@angular/router';
-import { TripsService } from '../services/trips.service';
+import { Router, RouterLink } from '@angular/router';
+import { TripService } from '../services/trip.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Trip } from '../../../shared/models/trip.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ProblemDetails } from '../../../shared/models/problem-details.model';
 
 @Component({
   selector: 'app-list',
-  imports: [MatCardModule, MatProgressSpinnerModule, MatButtonModule],
+  imports: [MatCardModule, MatProgressSpinnerModule, MatButtonModule, RouterLink],
   templateUrl: './list.page.html',
   styleUrl: './list.page.scss',
 })
 export class ListPage {
   private readonly router = inject(Router);
-  private readonly tripService = inject(TripsService);
+  private readonly tripService = inject(TripService);
 
-  readonly trips = signal<Trip[]>([]);
   readonly isLoading = signal(false);
   readonly errorMessage = signal<string | null>(null);
+
+  readonly rawTrips = signal<Trip[]>([]);
+  readonly sortedTrips = computed(() => {
+    return [...this.rawTrips()].sort((a, b) => {
+      return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
+    });
+  });
 
   ngOnInit(): void {
     this.loadTrips();
@@ -30,23 +37,16 @@ export class ListPage {
     this.errorMessage.set(null);
 
     this.tripService.findAll().subscribe({
-      next: (trips) => {
-        this.trips.set(trips);
-        console.log(this.trips());
+      next: (trips: Trip[]) => {
+        this.rawTrips.set(trips);
+        console.log(this.rawTrips());
         this.isLoading.set(false);
       },
       error: (error: HttpErrorResponse) => {
-        this.errorMessage.set('Failed to load trips');
+        const problem: ProblemDetails = error.error;
+        this.errorMessage.set(problem?.detail || 'Failed to load trips');
         this.isLoading.set(false);
       },
     });
-  }
-
-  openCreateTrip(): void {
-    this.router.navigate(['/trips/new']);
-  }
-
-  openTripDetail(id: number): void {
-    this.router.navigate(['/trips', id]);
   }
 }

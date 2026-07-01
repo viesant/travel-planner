@@ -1,7 +1,7 @@
 <div class="header">
   <h2>My Trips</h2>
 
-  <button mat-flat-button (click)="openCreateTrip()">+ New Trip</button>
+  <button mat-flat-button routerLink="/trips/new">+ New Trip</button>
 </div>
 
 @if (isLoading()) {
@@ -18,14 +18,14 @@
   </mat-card>
 }
 
-@if (!isLoading() && trips().length === 0) {
+@if (!isLoading() && rawTrips().length === 0) {
   <mat-card class="empty">
     <mat-card-content>No trips found</mat-card-content>
   </mat-card>
 }
 
 <div class="trip-grid">
-  @for (trip of trips(); track trip.id) {
+  @for (trip of sortedTrips(); track trip.id) {
     <mat-card class="trip-card">
       <mat-card-header>
         <mat-card-title>
@@ -40,7 +40,7 @@
       </mat-card-content>
 
       <mat-card-actions align="end">
-        <button mat-stroked-button (click)="openTripDetail(trip.id)">View</button>
+        <button mat-stroked-button [routerLink]="['/trips', trip.id]">View</button>
       </mat-card-actions>
     </mat-card>
   }
