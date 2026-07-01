@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterLink } from '@angular/router';
@@ -14,7 +14,7 @@ import { ProblemDetails } from '../../../shared/models/problem-details.model';
   templateUrl: './list.page.html',
   styleUrl: './list.page.scss',
 })
-export class ListPage {
+export class ListPage implements OnInit {
   private readonly router = inject(Router);
   private readonly tripService = inject(TripService);
 

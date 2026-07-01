@@ -1,5 +1,4 @@
 import { Component, inject, signal } from '@angular/core';
-import { readonly } from '@angular/forms/signals';
 import { Router, RouterLink } from '@angular/router';
 import { TripService } from '../services/trip.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,7 +11,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-create',
@@ -23,6 +21,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatInputModule,
     MatCardModule,
     MatDatepickerModule,
+    RouterLink,
   ],
   templateUrl: './create.page.html',
   styleUrl: './create.page.scss',
@@ -47,11 +46,8 @@ export class CreatePage {
     }
 
     this.errorMessage.set(null);
-    console.log(this.createForm.getRawValue());
 
     const tripData: TripRequest = this.createForm.getRawValue();
-
-    console.log(tripData);
 
     this.tripService.create(tripData).subscribe({
       next: (trip: Trip) => {
