@@ -26,22 +26,22 @@
           }
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="form-field-full">
+        <mat-form-field appearance="outline" class="form-field-full" (click)="startPicker.open()">
           <mat-label>Start Date</mat-label>
           <input
             matInput
-            [matDatepicker]="startPicker"
             formControlName="startDate"
+            [matDatepicker]="startPicker"
             placeholder="Choose a date"
           />
           <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
-          <mat-datepicker #startPicker></mat-datepicker>
+          <mat-datepicker #startPicker [touchUi]="true"></mat-datepicker>
           @if (createForm.get('startDate')?.hasError('required')) {
             <mat-error>Start date is required.</mat-error>
           }
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="form-field-full">
+        <mat-form-field appearance="outline" class="form-field-full" (click)="endPicker.open()">
           <mat-label>End Date</mat-label>
           <input
             matInput
@@ -51,7 +51,7 @@
             placeholder="Choose a date"
           />
           <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
-          <mat-datepicker #endPicker></mat-datepicker>
+          <mat-datepicker #endPicker [touchUi]="true"></mat-datepicker>
           @if (createForm.get('endDate')?.hasError('required')) {
             <mat-error>End date is required.</mat-error>
           }

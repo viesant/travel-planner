@@ -7,10 +7,11 @@ import { ProblemDetails } from '../../../shared/models/problem-details.model';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-detail',
-  imports: [MatCardModule, MatProgressSpinnerModule, MatButtonModule, RouterLink],
+  imports: [MatCardModule, MatProgressSpinnerModule, MatButtonModule, RouterLink, DatePipe],
   templateUrl: './detail.page.html',
   styleUrl: './detail.page.scss',
 })

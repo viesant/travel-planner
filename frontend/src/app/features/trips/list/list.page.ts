@@ -7,10 +7,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Trip } from '../../../shared/models/trip.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProblemDetails } from '../../../shared/models/problem-details.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-list',
-  imports: [MatCardModule, MatProgressSpinnerModule, MatButtonModule, RouterLink],
+  imports: [MatCardModule, MatProgressSpinnerModule, MatButtonModule, RouterLink, DatePipe],
   templateUrl: './list.page.html',
   styleUrl: './list.page.scss',
 })

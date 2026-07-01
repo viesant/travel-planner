@@ -18,7 +18,7 @@
           {{ data.title }}
         </mat-card-title>
         <mat-card-subtitle class="trip-dates">
-          📅 {{ data.startDate }} → {{ data.endDate }}
+          📅 {{ data.startDate | date: 'MM/dd/yyyy' }} → {{ data.endDate | date: 'MM/dd/yyyy' }}
         </mat-card-subtitle>
       </mat-card-header>
 

@@ -36,7 +36,9 @@
       <mat-card-content>
         <p>{{ trip.description }}</p>
 
-        <p class="dates">📅 {{ trip.startDate }} → {{ trip.endDate }}</p>
+        <p class="dates">
+          📅 {{ trip.startDate | date: 'MM/dd/yyyy' }} → {{ trip.endDate | date: 'MM/dd/yyyy' }}
+        </p>
       </mat-card-content>
 
       <mat-card-actions align="end">
