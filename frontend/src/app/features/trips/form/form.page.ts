@@ -7,10 +7,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { TripService } from '../services/trip.service';
-import { Trip } from '../../../shared/models/trip.model';
+import { Trip } from '../../../shared/models/trip';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
-import { TripRequest } from '../models/trip-request.model';
+import { TripRequest } from '../models/trip-request';
 
 @Component({
   selector: 'app-form',

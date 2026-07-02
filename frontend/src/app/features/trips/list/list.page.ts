@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Router, RouterLink } from '@angular/router';
 import { TripService } from '../services/trip.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Trip } from '../../../shared/models/trip.model';
+import { Trip } from '../../../shared/models/trip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProblemDetails } from '../../../shared/models/problem-details';
 import { DatePipe } from '@angular/common';

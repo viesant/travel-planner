@@ -1,7 +1,7 @@
 import { Component, inject, input, numberAttribute, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { TripService } from '../services/trip.service';
-import { Trip } from '../../../shared/models/trip.model';
+import { Trip } from '../../../shared/models/trip';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
 import { MatCardModule } from '@angular/material/card';

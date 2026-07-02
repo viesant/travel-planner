@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { AuthRequest } from '../../../features/auth/models/auth-request';
 import { Observable, tap } from 'rxjs';
+import { AuthRequest } from '../../../features/auth/models/auth-request';
 import { AuthResponse } from '../../../features/auth/models/auth-response';
 import { RegisterRequest } from '../../../features/auth/models/register-request';
-import { User } from '../../../shared/models/user.model';
+import { User } from '../../../shared/models/user';
 
 @Injectable({
   providedIn: 'root',
