@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { anonGuard } from './core/auth/guards/anon-guard';
 import { authGuard } from './core/auth/guards/auth-guard';
-import { FormPage } from './features/trips/form/form.page';
 
 export const routes: Routes = [
   {
@@ -11,13 +10,14 @@ export const routes: Routes = [
   },
   {
     path: 'auth/login',
-    loadComponent: () => import('./features/auth/login/login.page').then((m) => m.LoginPage),
+    loadComponent: () =>
+      import('./features/auth/auth-login/auth-login.page').then((m) => m.AuthLoginPage),
     canActivate: [anonGuard],
   },
   {
     path: 'auth/register',
     loadComponent: () =>
-      import('./features/auth/register/register.page').then((m) => m.RegisterPage),
+      import('./features/auth/auth-register/auth-register.page').then((m) => m.AuthRegisterPage),
     canActivate: [anonGuard],
   },
   {

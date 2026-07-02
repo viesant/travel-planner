@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -6,12 +7,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/auth/services/auth.service';
-import { RegisterRequest } from '../models/register-request';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
+import { RegisterRequest } from '../models/register-request';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-auth-register',
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
@@ -20,10 +20,10 @@ import { ProblemDetails } from '../../../shared/models/problem-details';
     MatCardModule,
     RouterLink,
   ],
-  templateUrl: './register.page.html',
-  styleUrl: './register.page.scss',
+  templateUrl: './auth-register.page.html',
+  styleUrl: './auth-register.page.scss',
 })
-export class RegisterPage {
+export class AuthRegisterPage {
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);

@@ -1,17 +1,17 @@
-import { Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../core/auth/services/auth.service';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthRequest } from '../models/auth-request';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProblemDetails } from '../../../shared/models/problem-details';
+import { Component, inject, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/auth/services/auth.service';
+import { ProblemDetails } from '../../../shared/models/problem-details';
+import { AuthRequest } from '../models/auth-request';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-auth-login',
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
@@ -20,10 +20,10 @@ import { MatCardModule } from '@angular/material/card';
     MatCardModule,
     RouterLink,
   ],
-  templateUrl: './login.page.html',
-  styleUrl: './login.page.scss',
+  templateUrl: './auth-login.page.html',
+  styleUrl: './auth-login.page.scss',
 })
-export class LoginPage {
+export class AuthLoginPage {
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
