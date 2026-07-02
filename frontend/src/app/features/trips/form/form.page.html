@@ -1,9 +1,15 @@
-<div class="create-container">
-  <mat-card class="create-card">
-    <mat-card-header class="create-header">
-      <mat-card-title class="create-title">Create New Trip 🗺️</mat-card-title>
-      <mat-card-subtitle class="create-subtitle">
-        Plan your next adventure step by step
+<div class="form-container">
+  <mat-card class="form-card">
+    <mat-card-header class="form-header">
+      <mat-card-title class="form-title">
+        {{ isEditMode() ? 'Edit Trip 📝' : 'Create New Trip 🗺️' }}
+      </mat-card-title>
+      <mat-card-subtitle class="form-subtitle">
+        {{
+          isEditMode()
+            ? 'Update your adventure details below'
+            : 'Plan your next adventure step by step'
+        }}
       </mat-card-subtitle>
     </mat-card-header>
 
@@ -11,7 +17,7 @@
       <div class="error-box">⚠️ {{ errorMessage() }}</div>
     }
 
-    <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="tripForm" (ngSubmit)="onSubmit()">
       <mat-card-content class="form-body">
         <mat-form-field appearance="outline" class="form-field-full">
           <mat-label>Title</mat-label>
@@ -21,7 +27,7 @@
             formControlName="title"
             placeholder="Ex: Eurotrip 2026, Summer Vacation"
           />
-          @if (createForm.get('title')?.hasError('required')) {
+          @if (tripForm.get('title')?.hasError('required')) {
             <mat-error>Title is required.</mat-error>
           }
         </mat-form-field>
@@ -36,7 +42,7 @@
           />
           <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
           <mat-datepicker #startPicker [touchUi]="true"></mat-datepicker>
-          @if (createForm.get('startDate')?.hasError('required')) {
+          @if (tripForm.get('startDate')?.hasError('required')) {
             <mat-error>Start date is required.</mat-error>
           }
         </mat-form-field>
@@ -47,12 +53,12 @@
             matInput
             [matDatepicker]="endPicker"
             formControlName="endDate"
-            [min]="createForm.get('startDate')?.value"
+            [min]="tripForm.get('startDate')?.value"
             placeholder="Choose a date"
           />
           <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
           <mat-datepicker #endPicker [touchUi]="true"></mat-datepicker>
-          @if (createForm.get('endDate')?.hasError('required')) {
+          @if (tripForm.get('endDate')?.hasError('required')) {
             <mat-error>End date is required.</mat-error>
           }
         </mat-form-field>
@@ -69,10 +75,21 @@
       </mat-card-content>
 
       <mat-card-actions align="end" class="form-actions">
-        <button mat-button type="button" routerLink="/trips">Cancel</button>
+        <button mat-button type="button" routerLink="/trips" [disabled]="isLoading()">
+          Cancel
+        </button>
 
-        <button mat-flat-button type="submit" [disabled]="createForm.invalid" class="submit-button">
-          Create Trip
+        <button
+          mat-flat-button
+          type="submit"
+          [disabled]="tripForm.invalid || isLoading()"
+          class="submit-button"
+        >
+          @if (isLoading()) {
+            <span>Saving...</span>
+          } @else {
+            <span>{{ isEditMode() ? 'Update Trip' : 'Create Trip' }}</span>
+          }
         </button>
       </mat-card-actions>
     </form>

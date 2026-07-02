@@ -3,7 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { TripService } from '../services/trip.service';
 import { Trip } from '../../../shared/models/trip.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProblemDetails } from '../../../shared/models/problem-details.model';
+import { ProblemDetails } from '../../../shared/models/problem-details';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,7 +30,7 @@ export class DetailPage implements OnInit {
   }
 
   loadTripById() {
-    const numericId = +this.id();
+    const numericId = Number(this.id());
 
     if (isNaN(numericId)) {
       console.warn(`Invalid ID detected: "${numericId}". Redirecting to safety.`);

@@ -4,7 +4,7 @@ import { AuthService } from '../../../core/auth/services/auth.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthRequest } from '../models/auth-request';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProblemDetails } from '../../../shared/models/problem-details.model';
+import { ProblemDetails } from '../../../shared/models/problem-details';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';

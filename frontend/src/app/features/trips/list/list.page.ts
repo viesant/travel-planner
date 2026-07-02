@@ -6,7 +6,7 @@ import { TripService } from '../services/trip.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Trip } from '../../../shared/models/trip.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ProblemDetails } from '../../../shared/models/problem-details.model';
+import { ProblemDetails } from '../../../shared/models/problem-details';
 import { DatePipe } from '@angular/common';
 
 @Component({

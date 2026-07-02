@@ -11,6 +11,10 @@ export class TripService {
   private readonly http = inject(HttpClient);
   private readonly BASE_URL = 'http://localhost:8081/trips';
 
+  create(tripData: TripRequest): Observable<Trip> {
+    return this.http.post<Trip>(this.BASE_URL, tripData);
+  }
+
   findAll(): Observable<Trip[]> {
     return this.http.get<Trip[]>(this.BASE_URL);
   }
@@ -19,7 +23,7 @@ export class TripService {
     return this.http.get<Trip>(this.BASE_URL + `/${id}`);
   }
 
-  create(tripData: TripRequest): Observable<Trip> {
-    return this.http.post<Trip>(this.BASE_URL, tripData);
+  update(id: number, tripData: TripRequest): Observable<Trip> {
+    return this.http.put<Trip>(this.BASE_URL + `/${id}`, tripData);
   }
 }
