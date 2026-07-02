@@ -1,4 +1,5 @@
-import { Component, computed, inject, input, numberAttribute, OnInit, signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -6,14 +7,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
-import { TripService } from '../services/trip.service';
-import { Trip } from '../../../shared/models/trip';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
+import { Trip } from '../../../shared/models/trip';
 import { TripRequest } from '../models/trip-request';
+import { TripService } from '../services/trip.service';
 
 @Component({
-  selector: 'app-form',
+  selector: 'app-trip-form',
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
@@ -23,10 +23,10 @@ import { TripRequest } from '../models/trip-request';
     MatDatepickerModule,
     RouterLink,
   ],
-  templateUrl: './form.page.html',
-  styleUrl: './form.page.scss',
+  templateUrl: './trip-form.page.html',
+  styleUrl: './trip-form.page.scss',
 })
-export class FormPage implements OnInit {
+export class TripFormPage implements OnInit {
   private readonly router = inject(Router);
   private readonly tripService = inject(TripService);
   private readonly fb = inject(FormBuilder);

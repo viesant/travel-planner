@@ -22,22 +22,26 @@ export const routes: Routes = [
   },
   {
     path: 'trips',
-    loadComponent: () => import('./features/trips/list/list.page').then((m) => m.ListPage),
+    loadComponent: () =>
+      import('./features/trips/trip-list/trip-list.page').then((m) => m.TripListPage),
     canActivate: [authGuard],
   },
   {
     path: 'trips/new',
-    loadComponent: () => import('./features/trips/form/form.page').then((m) => m.FormPage),
+    loadComponent: () =>
+      import('./features/trips/trip-form/trip-form.page').then((m) => m.TripFormPage),
     canActivate: [authGuard],
   },
   {
     path: 'trips/:id',
-    loadComponent: () => import('./features/trips/detail/detail.page').then((m) => m.DetailPage),
+    loadComponent: () =>
+      import('./features/trips/trip-detail/trip-detail.page').then((m) => m.TripDetailPage),
     canActivate: [authGuard],
   },
   {
     path: 'trips/:id/edit',
-    loadComponent: () => import('./features/trips/form/form.page').then((m) => m.FormPage),
+    loadComponent: () =>
+      import('./features/trips/trip-form/trip-form.page').then((m) => m.TripFormPage),
     canActivate: [authGuard],
   },
   {

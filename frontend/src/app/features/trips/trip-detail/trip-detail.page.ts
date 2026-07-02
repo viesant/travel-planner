@@ -1,21 +1,21 @@
-import { Component, inject, input, numberAttribute, OnInit, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { TripService } from '../services/trip.service';
-import { Trip } from '../../../shared/models/trip';
+import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProblemDetails } from '../../../shared/models/problem-details';
+import { Component, inject, input, numberAttribute, OnInit, signal } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatButtonModule } from '@angular/material/button';
-import { DatePipe } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
+import { ProblemDetails } from '../../../shared/models/problem-details';
+import { Trip } from '../../../shared/models/trip';
+import { TripService } from '../services/trip.service';
 
 @Component({
-  selector: 'app-detail',
+  selector: 'app-trip-detail',
   imports: [MatCardModule, MatProgressSpinnerModule, MatButtonModule, RouterLink, DatePipe],
-  templateUrl: './detail.page.html',
-  styleUrl: './detail.page.scss',
+  templateUrl: './trip-detail.page.html',
+  styleUrl: './trip-detail.page.scss',
 })
-export class DetailPage implements OnInit {
+export class TripDetailPage implements OnInit {
   private readonly router = inject(Router);
   private readonly tripService = inject(TripService);
 

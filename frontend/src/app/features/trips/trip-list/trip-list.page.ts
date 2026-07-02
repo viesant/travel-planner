@@ -1,21 +1,21 @@
+import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { Router, RouterLink } from '@angular/router';
-import { TripService } from '../services/trip.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Trip } from '../../../shared/models/trip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Router, RouterLink } from '@angular/router';
 import { ProblemDetails } from '../../../shared/models/problem-details';
-import { DatePipe } from '@angular/common';
+import { Trip } from '../../../shared/models/trip';
+import { TripService } from '../services/trip.service';
 
 @Component({
-  selector: 'app-list',
+  selector: 'app-trip-list',
   imports: [MatCardModule, MatProgressSpinnerModule, MatButtonModule, RouterLink, DatePipe],
-  templateUrl: './list.page.html',
-  styleUrl: './list.page.scss',
+  templateUrl: './trip-list.page.html',
+  styleUrl: './trip-list.page.scss',
 })
-export class ListPage implements OnInit {
+export class TripListPage implements OnInit {
   private readonly router = inject(Router);
   private readonly tripService = inject(TripService);
 
