@@ -8,10 +8,20 @@ import { Router, RouterLink } from '@angular/router';
 import { ProblemDetails } from '../../../shared/models/problem-details';
 import { Trip } from '../../../shared/models/trip';
 import { TripService } from '../services/trip.service';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-trip-detail',
-  imports: [MatCardModule, MatProgressSpinnerModule, MatButtonModule, RouterLink, DatePipe],
+  imports: [
+    MatCardModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    RouterLink,
+    DatePipe,
+    MatTabsModule,
+    MatIconModule,
+  ],
   templateUrl: './trip-detail.page.html',
   styleUrl: './trip-detail.page.scss',
 })

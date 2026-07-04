@@ -12,28 +12,70 @@
   }
 
   @if (trip(); as data) {
-    <mat-card class="trip-detail-card">
-      <mat-card-header class="trip-header">
-        <mat-card-title class="trip-title">
-          {{ data.title }}
-        </mat-card-title>
-        <mat-card-subtitle class="trip-dates">
-          📅 {{ data.startDate | date: 'MM/dd/yyyy' }} → {{ data.endDate | date: 'MM/dd/yyyy' }}
-        </mat-card-subtitle>
-      </mat-card-header>
+    <header class="trip-header">
+      <div class="header-content">
+        <h1 class="trip-title">{{ data.title }}</h1>
+        <p class="trip-dates">
+          <mat-icon>calendar_month</mat-icon>
+          <span>
+            {{ data.startDate | date: 'MM/dd/yyyy' }} - {{ data.endDate | date: 'MM/dd/yyyy' }}
+          </span>
+        </p>
+      </div>
+      <div class="header-actions">
+        <button mat-icon-button [routerLink]="['/trips', data.id, 'edit']" title="Edit trip">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-button routerLink="/trips">
+          <mat-icon>arrow_back</mat-icon>
+          Back
+        </button>
+      </div>
+    </header>
 
-      <mat-card-content class="trip-content">
-        @if (data.description) {
-          <h4 class="section-title">About this trip</h4>
-          <p class="trip-description">{{ data.description }}</p>
-        } @else {
-          <p class="no-description">No description provided for this trip.</p>
-        }
-      </mat-card-content>
+    <mat-tab-group class="trip-tabs" animationDuration="0ms">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">info</mat-icon>
+          <span class="tab-text">Overview</span>
+        </ng-template>
 
-      <mat-card-actions class="trip-actions">
-        <button mat-stroked-button routerLink="/trips">← Back to List</button>
-      </mat-card-actions>
-    </mat-card>
+        <div class="tab-content">
+          <mat-card class="overview-card">
+            <mat-card-content>
+              <h3>About this trip</h3>
+              <p class="description-text">
+                {{ data.description || 'No description provided for this trip.' }}
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">hotel</mat-icon>
+          <span class="tab-text">Accommodations</span>
+        </ng-template>
+
+        <div class="tab-content">
+          <p>Accommodations management coming soon...</p>
+        </div>
+      </mat-tab>
+
+      <mat-tab disabled>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">directions_bus</mat-icon>
+          <span class="tab-text">Transports</span>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab disabled>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">local_activity</mat-icon>
+          <span class="tab-text">Activities</span>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
   }
 </div>
