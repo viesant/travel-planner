@@ -46,11 +46,11 @@ export class TripFormPage implements OnInit {
 
   ngOnInit(): void {
     if (this.isEditMode()) {
-      this.updateFormWithTripData();
+      this.loadTripIntoForm();
     }
   }
 
-  private updateFormWithTripData() {
+  private loadTripIntoForm() {
     this.isLoading.set(true);
     this.errorMessage.set(null);
 

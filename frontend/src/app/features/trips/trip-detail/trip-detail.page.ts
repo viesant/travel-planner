@@ -10,6 +10,7 @@ import { Trip } from '../../../shared/models/trip';
 import { TripService } from '../services/trip.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
+import { AccommodationListComponent } from '../../accommodations/accommodation-list/accommodation-list.component';
 
 @Component({
   selector: 'app-trip-detail',
@@ -21,6 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
     DatePipe,
     MatTabsModule,
     MatIconModule,
+    AccommodationListComponent,
   ],
   templateUrl: './trip-detail.page.html',
   styleUrl: './trip-detail.page.scss',

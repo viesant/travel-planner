@@ -1,0 +1,80 @@
+@if (!isFormOpen()) {
+  <div class="accommodations-container">
+    <div class="actions-bar">
+      <h2>Booked Accommodations 🏨</h2>
+      <button mat-raised-button color="primary" (click)="openCreateForm()">
+        <mat-icon>add</mat-icon>
+        Add Accommodation
+      </button>
+    </div>
+
+    @if (isLoading()) {
+      <div class="loading-shade">
+        <mat-spinner></mat-spinner>
+      </div>
+    } @else if (errorMessage()) {
+      <div class="error-box">⚠️ {{ errorMessage() }}</div>
+    } @else {
+      <mat-accordion class="accommodation-accordion" multi="true">
+        @for (item of sortedAccommodations(); track item.id) {
+          <mat-expansion-panel class="accommodation-panel">
+            <mat-expansion-panel-header class="panel-header">
+              <mat-panel-title class="item-name">
+                <mat-icon color="primary">hotel</mat-icon>
+                <span>{{ item.name }}</span>
+              </mat-panel-title>
+              <mat-panel-description class="item-dates">
+                {{ item.checkInDate | date: 'MM/dd/yyyy' }} -
+                {{ item.checkOutDate | date: 'MM/dd/yyyy' }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="panel-content">
+              <div class="details-grid">
+                <p><strong>Location/City:</strong> {{ item.location }}</p>
+                <p><strong>Full Address:</strong> {{ item.address }}</p>
+                <p>
+                  <strong>Price:</strong>
+                  <span class="price-value">{{ item.price | currency: 'USD' }}</span>
+                </p>
+                @if (item.bookingNumber) {
+                  <p><strong>Booking Number:</strong> {{ item.bookingNumber }}</p>
+                }
+              </div>
+
+              @if (item.notes) {
+                <div class="notes-section">
+                  <strong>Notes:</strong>
+                  <p class="notes-text">{{ item.notes }}</p>
+                </div>
+              }
+
+              <div class="panel-actions">
+                <button mat-button color="primary" (click)="openEditForm(item)">
+                  <mat-icon>edit</mat-icon>
+                  Edit
+                </button>
+                <button mat-button color="warn" (click)="deleteAccommodation(item)">
+                  <mat-icon>delete</mat-icon>
+                  Delete
+                </button>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        } @empty {
+          <div class="empty-state">
+            <mat-icon class="empty-icon">hotel</mat-icon>
+            <p>No accommodations registered for this trip yet.</p>
+          </div>
+        }
+      </mat-accordion>
+    }
+  </div>
+} @else {
+  <app-accommodation-form
+    [tripId]="tripId()"
+    [accommodationToEdit]="selectedAccommodation()"
+    (formClosed)="closeForm()"
+  >
+  </app-accommodation-form>
+}

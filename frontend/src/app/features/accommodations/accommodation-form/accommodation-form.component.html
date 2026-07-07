@@ -1,0 +1,155 @@
+<div class="form-container">
+  <mat-card class="form-card">
+    <mat-card-header class="form-header">
+      <mat-card-title class="form-title">
+        {{ isEditMode() ? 'Edit Accommodation 📝' : 'Add New Accommodation 🏨' }}
+      </mat-card-title>
+      <mat-card-subtitle class="form-subtitle">
+        {{
+          isEditMode()
+            ? 'Update the lodging details for this stay'
+            : 'Enter the lodging details for your trip'
+        }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    @if (errorMessage()) {
+      <div class="error-box">⚠️ {{ errorMessage() }}</div>
+    }
+
+    <form [formGroup]="accommodationForm" (ngSubmit)="onSubmit()">
+      <mat-card-content class="form-body">
+        <!-- Campo: Name -->
+        <mat-form-field appearance="outline" class="form-field-full">
+          <mat-label>Accommodation Name</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="name"
+            placeholder="Ex: Hilton Hotel, Cozy Central Apartment"
+          />
+          @if (accommodationForm.get('name')?.hasError('required')) {
+            <mat-error>Name is required.</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Container de Localização e Endereço Lado a Lado -->
+        <div class="form-row">
+          <!-- Campo: Location (Cidade/Região) -->
+          <mat-form-field appearance="outline" class="form-field-half">
+            <mat-label>Location / City</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="location"
+              placeholder="Ex: Paris, New York"
+            />
+          </mat-form-field>
+
+          <!-- Campo: Address -->
+          <mat-form-field appearance="outline" class="form-field-half">
+            <mat-label>Full Address</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="address"
+              placeholder="Ex: 123 Rue de Rivoli"
+            />
+          </mat-form-field>
+        </div>
+
+        <!-- Container de Datas Lado a Lado -->
+        <div class="form-row">
+          <!-- Campo: Check-in Date -->
+          <mat-form-field appearance="outline" class="form-field-half" (click)="startPicker.open()">
+            <mat-label>Check-in Date</mat-label>
+            <input
+              matInput
+              formControlName="checkInDate"
+              [matDatepicker]="startPicker"
+              placeholder="Choose a date"
+            />
+            <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+            <mat-datepicker #startPicker [touchUi]="true"></mat-datepicker>
+            @if (accommodationForm.get('checkInDate')?.hasError('required')) {
+              <mat-error>Check-in date is required.</mat-error>
+            }
+          </mat-form-field>
+
+          <!-- Campo: Check-out Date -->
+          <mat-form-field appearance="outline" class="form-field-half" (click)="endPicker.open()">
+            <mat-label>Check-out Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="endPicker"
+              formControlName="checkOutDate"
+              [min]="accommodationForm.get('checkInDate')?.value"
+              placeholder="Choose a date"
+            />
+            <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endPicker [touchUi]="true"></mat-datepicker>
+            @if (accommodationForm.get('checkOutDate')?.hasError('required')) {
+              <mat-error>Check-out date is required.</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <!-- Container de Preço e Booking Number Lado a Lado -->
+        <div class="form-row">
+          <!-- Campo: Price -->
+          <mat-form-field appearance="outline" class="form-field-half">
+            <mat-label>Price (USD)</mat-label>
+            <input matInput type="number" formControlName="price" placeholder="0.00" />
+            <span matTextPrefix>$&nbsp;</span>
+            @if (accommodationForm.get('price')?.hasError('required')) {
+              <mat-error>Price is required.</mat-error>
+            }
+          </mat-form-field>
+
+          <!-- Campo: Booking Number -->
+          <mat-form-field appearance="outline" class="form-field-half">
+            <mat-label>Booking Number / Confirmation</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="bookingNumber"
+              placeholder="Ex: BK-987654"
+            />
+          </mat-form-field>
+        </div>
+
+        <!-- Campo: Notes -->
+        <mat-form-field appearance="outline" class="form-field-full">
+          <mat-label>Notes & Observations</mat-label>
+          <textarea
+            matInput
+            formControlName="notes"
+            placeholder="Breakfast included, late check-in request, Wi-Fi password..."
+            rows="3"
+          ></textarea>
+        </mat-form-field>
+      </mat-card-content>
+
+      <!-- Botões de Ação Regulados pelo Estado de Loading -->
+      <mat-card-actions align="end" class="form-actions">
+        <!-- Dispara o output para fechar a tela ao cancelar -->
+        <button mat-button type="button" (click)="formClosed.emit()" [disabled]="isLoading()">
+          Cancel
+        </button>
+
+        <button
+          mat-flat-button
+          type="submit"
+          [disabled]="accommodationForm.invalid || isLoading()"
+          class="submit-button"
+        >
+          @if (isLoading()) {
+            <span>Saving...</span>
+          } @else {
+            <span>{{ isEditMode() ? 'Update Stay' : 'Save Stay' }}</span>
+          }
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>
