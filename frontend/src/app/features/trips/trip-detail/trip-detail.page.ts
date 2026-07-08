@@ -12,6 +12,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { AccommodationListComponent } from '../../accommodations/accommodation-list/accommodation-list.component';
 import { TransportListComponent } from '../../transports/transport-list/transport-list.component';
+import { ActivityListComponent } from '../../activities/activity-list/activity-list.component';
 
 @Component({
   selector: 'app-trip-detail',
@@ -25,6 +26,7 @@ import { TransportListComponent } from '../../transports/transport-list/transpor
     MatIconModule,
     AccommodationListComponent,
     TransportListComponent,
+    ActivityListComponent,
   ],
   templateUrl: './trip-detail.page.html',
   styleUrl: './trip-detail.page.scss',
