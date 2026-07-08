@@ -10,7 +10,7 @@ import { Transport } from '../../../shared/models/transport';
 import { TransportService } from '../services/transport.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
-import { TransportType } from '../../../shared/models/transport-type';
+import { TRANSPORT_TYPES, TransportType } from '../../../shared/models/transport-type';
 import { TransportFormComponent } from '../transport-form/transport-form.component';
 
 @Component({
@@ -102,16 +102,7 @@ export class TransportListComponent implements OnInit {
     });
   }
 
-  private readonly transportIcons: Record<TransportType, string> = {
-    FLIGHT: 'flight',
-    BUS: 'directions_bus',
-    TRAIN: 'directions_transit',
-    CAR: 'directions_car',
-    BOAT: 'directions_boat',
-    OTHER: 'explore',
-  };
-
-  getTransportIcon(type: TransportType): string {
-    return this.transportIcons[type] || 'explore';
+  getTransportIcon(value: TransportType): string {
+    return TRANSPORT_TYPES.find((t) => t.value === value)?.icon || 'explore';
   }
 }

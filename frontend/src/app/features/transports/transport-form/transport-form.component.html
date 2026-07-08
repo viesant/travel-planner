@@ -23,9 +23,8 @@
           <mat-form-field appearance="outline" class="form-field-half">
             <mat-label>Transport Type</mat-label>
             <mat-select formControlName="type">
-              <!-- Loop dinâmico sobre a constante congelada física -->
-              @for (mode of transportTypes; track mode) {
-                <mat-option [value]="mode">{{ mode }}</mat-option>
+              @for (mode of transportTypes; track mode.value) {
+                <mat-option [value]="mode.value">{{ mode.label }}</mat-option>
               }
             </mat-select>
             @if (transportForm.get('type')?.hasError('required')) {
@@ -96,12 +95,12 @@
 
         <div class="form-row datetime-row">
           <div class="datetime-group">
-            <mat-form-field appearance="outline" (click)="depDate.open()">
+            <mat-form-field appearance="outline">
               <mat-label>Departure Date</mat-label>
               <input
                 matInput
                 [matDatepicker]="depDate"
-                formControlName="departureDateTime"
+                formControlName="departureDate"
                 placeholder="MM/dd/yyyy"
               />
               <mat-datepicker-toggle matIconSuffix [for]="depDate"></mat-datepicker-toggle>
@@ -110,28 +109,27 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Departure Time</mat-label>
-              <input
-                matInput
-                [matTimepicker]="depTime"
-                formControlName="departureDateTime"
-                placeholder="HH:mm"
-              />
-              <mat-timepicker-toggle
-                matIconSuffix
-                [for]="depTime"
-                (click)="depTime.open()"
-              ></mat-timepicker-toggle>
-              <mat-timepicker #depTime></mat-timepicker>
+              <input matInput [matTimepicker]="depTime" formControlName="departureTime" />
+              <mat-timepicker-toggle matIconSuffix [for]="depTime"></mat-timepicker-toggle>
+              <mat-timepicker interval="15min" #depTime></mat-timepicker>
             </mat-form-field>
           </div>
 
+          <p>{{ transportForm.controls.departureDate.value }}</p>
+          <p>
+            {{ transportForm.controls.departureDate.value | date: 'dd/MM/yyyy HH:mm' }}
+          </p>
+          <p>{{ transportForm.controls.departureTime.value }}</p>
+          <p>
+            {{ transportForm.controls.departureTime.value | date: 'dd/MM/yyyy HH:mm' }}
+          </p>
           <div class="datetime-group">
             <mat-form-field appearance="outline" (click)="arrDate.open()">
               <mat-label>Arrival Date</mat-label>
               <input
                 matInput
                 [matDatepicker]="arrDate"
-                formControlName="arrivalDateTime"
+                formControlName="arrivalDate"
                 placeholder="MM/dd/yyyy"
                 [min]="transportForm.get('departureDateTime')?.value"
               />
@@ -141,18 +139,9 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Arrival Time</mat-label>
-              <input
-                matInput
-                [matTimepicker]="arrTime"
-                formControlName="arrivalDateTime"
-                placeholder="HH:mm"
-              />
-              <mat-timepicker-toggle
-                matIconSuffix
-                [for]="arrTime"
-                (click)="arrTime.open()"
-              ></mat-timepicker-toggle>
-              <mat-timepicker #arrTime></mat-timepicker>
+              <input matInput [matTimepicker]="arrTime" formControlName="arrivalTime" />
+              <mat-timepicker-toggle matIconSuffix [for]="arrTime"></mat-timepicker-toggle>
+              <mat-timepicker interval="15min" #arrTime></mat-timepicker>
             </mat-form-field>
           </div>
         </div>

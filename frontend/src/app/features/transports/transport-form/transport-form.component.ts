@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTimepickerModule } from '@angular/material/timepicker';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-transport-form',
@@ -26,6 +27,7 @@ import { MatTimepickerModule } from '@angular/material/timepicker';
     MatDatepickerModule,
     MatSelectModule,
     MatTimepickerModule,
+    DatePipe,
   ],
   templateUrl: './transport-form.component.html',
   styleUrl: './transport-form.component.scss',
@@ -47,14 +49,16 @@ export class TransportFormComponent implements OnInit {
   readonly transportTypes = TRANSPORT_TYPES;
 
   readonly transportForm = this.fb.nonNullable.group({
-    type: [TRANSPORT_TYPES[0] as TransportType, [Validators.required]],
+    type: [TRANSPORT_TYPES[0].value as TransportType, [Validators.required]],
     carrier: [''],
     departureLocation: ['', [Validators.required]],
     departureAddress: [''],
     arrivalLocation: ['', [Validators.required]],
     arrivalAddress: [''],
-    departureDateTime: ['', [Validators.required]],
-    arrivalDateTime: ['', [Validators.required]],
+    departureDate: ['', [Validators.required]],
+    departureTime: ['', [Validators.required]],
+    arrivalDate: ['', [Validators.required]],
+    arrivalTime: ['', [Validators.required]],
     bookingNumber: [''],
     price: ['', [Validators.min(0)]],
     notes: [''],
@@ -103,8 +107,10 @@ export class TransportFormComponent implements OnInit {
       departureAddress: target.departureAddress,
       arrivalLocation: target.arrivalLocation,
       arrivalAddress: target.arrivalAddress,
-      departureDateTime: target.departureDateTime,
-      arrivalDateTime: target.arrivalDateTime,
+      departureDate: target.departureDateTime,
+      departureTime: target.departureDateTime,
+      arrivalDate: target.arrivalDateTime,
+      arrivalTime: target.arrivalDateTime,
       bookingNumber: target.bookingNumber,
       price: target.price as any,
       notes: target.notes,
@@ -128,8 +134,8 @@ export class TransportFormComponent implements OnInit {
       departureAddress: rawValue.departureAddress,
       arrivalLocation: rawValue.arrivalLocation,
       arrivalAddress: rawValue.arrivalAddress,
-      departureDateTime: rawValue.departureDateTime,
-      arrivalDateTime: rawValue.arrivalDateTime,
+      departureDateTime: this.mergeDateAndTime(rawValue.departureDate, rawValue.departureTime),
+      arrivalDateTime: this.mergeDateAndTime(rawValue.arrivalDate, rawValue.arrivalTime),
       bookingNumber: rawValue.bookingNumber,
       price: Number(rawValue.price),
       notes: rawValue.notes,
@@ -140,6 +146,21 @@ export class TransportFormComponent implements OnInit {
     } else {
       this.createTransport(requestData);
     }
+  }
+
+  private mergeDateAndTime(dateValue: any, timeValue: any): string {
+    if (!dateValue || !timeValue) return '';
+
+    const d = new Date(dateValue);
+    const t = new Date(timeValue);
+
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const hours = String(t.getHours()).padStart(2, '0');
+    const minutes = String(t.getMinutes()).padStart(2, '0');
+
+    return `${year}-${month}-${day}T${hours}:${minutes}:00`;
   }
 
   private createTransport(data: TransportRequest): void {
