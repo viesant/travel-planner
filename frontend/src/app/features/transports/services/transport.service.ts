@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { TransportRequest } from '../models/transport-request';
-import { Transport } from '../../../shared/models/transport';
 import { Observable } from 'rxjs';
+import { Transport } from '../../../shared/models/transport';
+import { TransportRequest } from '../models/transport-request';
 
 @Injectable({
   providedIn: 'root',

@@ -1,0 +1,92 @@
+@if (!isFormOpen()) {
+  <div class="transports-container">
+    <div class="actions-bar">
+      <h2>Transport Tickets & Logistics 🚇</h2>
+      <button mat-raised-button color="primary" (click)="openCreateForm()">
+        <mat-icon>add</mat-icon>
+        Add Transport
+      </button>
+    </div>
+
+    @if (isLoading()) {
+      <div class="loading-shade">
+        <mat-spinner></mat-spinner>
+      </div>
+    } @else if (errorMessage()) {
+      <div class="error-box">⚠️ {{ errorMessage() }}</div>
+    } @else {
+      <mat-accordion class="transport-accordion" multi="true">
+        @for (item of sortedTransports(); track item.id) {
+          <mat-expansion-panel class="transport-panel">
+            <mat-expansion-panel-header class="panel-header">
+              <mat-panel-title class="item-name">
+                <mat-icon color="primary">{{ getTransportIcon(item.type) }}</mat-icon>
+                <span>{{ item.type }} — {{ item.carrier }}</span>
+              </mat-panel-title>
+              <mat-panel-description class="item-dates">
+                {{ item.departureDateTime | date: 'MM/dd/yyyy HH:mm' }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="panel-content">
+              <div class="details-grid">
+                <p><strong>Departure:</strong> {{ item.departureLocation }}</p>
+                <p><strong>Departure Address:</strong> {{ item.departureAddress }}</p>
+                <p><strong>Arrival:</strong> {{ item.arrivalLocation }}</p>
+                <p><strong>Arrival Address:</strong> {{ item.arrivalAddress }}</p>
+                <p>
+                  <strong>Departure Time:</strong>
+                  {{ item.departureDateTime | date: 'MM/dd/yyyy HH:mm' }}
+                </p>
+                <p>
+                  <strong>Arrival Time:</strong>
+                  {{ item.arrivalDateTime | date: 'MM/dd/yyyy HH:mm' }}
+                </p>
+
+                <!-- CORREÇÃO: Alterado de ticketNumber para bookingNumber -->
+                @if (item.bookingNumber) {
+                  <p><strong>Booking / Ticket No:</strong> {{ item.bookingNumber }}</p>
+                }
+
+                <p>
+                  <strong>Cost:</strong>
+                  <span class="price-value">{{ item.price | currency: 'USD' }}</span>
+                </p>
+              </div>
+
+              @if (item.notes) {
+                <div class="notes-section">
+                  <strong>Notes & Reminders:</strong>
+                  <p class="notes-text">{{ item.notes }}</p>
+                </div>
+              }
+
+              <div class="panel-actions">
+                <button mat-button color="primary" (click)="openEditForm(item)">
+                  <mat-icon>edit</mat-icon>
+                  Edit
+                </button>
+                <button mat-button color="warn" (click)="deleteTransport(item)">
+                  <mat-icon>delete</mat-icon>
+                  Delete
+                </button>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        } @empty {
+          <div class="empty-state">
+            <mat-icon class="empty-icon">directions_bus</mat-icon>
+            <p>No transport tickets registered for this trip yet.</p>
+          </div>
+        }
+      </mat-accordion>
+    }
+  </div>
+} @else {
+  <!-- <app-transport-form
+    [tripId]="tripId()"
+    [transportToEdit]="selectedTransport()"
+    (formClosed)="closeForm()"
+  >
+  </app-transport-form> -->
+}

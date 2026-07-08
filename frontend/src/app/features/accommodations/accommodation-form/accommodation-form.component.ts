@@ -21,7 +21,6 @@ import { AccommodationRequest } from '../models/accommodation-request';
     MatInputModule,
     MatCardModule,
     MatDatepickerModule,
-    RouterLink,
   ],
   templateUrl: './accommodation-form.component.html',
   styleUrl: './accommodation-form.component.scss',

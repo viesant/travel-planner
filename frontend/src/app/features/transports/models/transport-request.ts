@@ -1,5 +1,7 @@
+import { TransportType } from '../../../shared/models/transport-type';
+
 export interface TransportRequest {
-  type: string;
+  type: TransportType;
   carrier: string;
   departureLocation: string;
   departureAddress: string;

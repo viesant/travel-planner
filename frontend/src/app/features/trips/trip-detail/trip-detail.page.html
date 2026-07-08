@@ -65,10 +65,16 @@
         </ng-template>
       </mat-tab>
 
-      <mat-tab disabled>
+      <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="tab-icon">directions_bus</mat-icon>
           <span class="tab-text">Transports</span>
+        </ng-template>
+
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-transport-list [tripId]="data.id"></app-transport-list>
+          </div>
         </ng-template>
       </mat-tab>
 

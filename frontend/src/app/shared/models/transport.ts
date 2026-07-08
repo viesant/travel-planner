@@ -1,6 +1,8 @@
+import { TransportType } from './transport-type';
+
 export interface Transport {
   id: number;
-  type: string;
+  type: TransportType;
   carrier: string;
   departureLocation: string;
   departureAddress: string;
