@@ -28,7 +28,7 @@
 .transport-accordion {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; // Pequeno espaçamento higiênico entre cada linha
+  gap: 0.5rem;
   box-shadow: none !important;
 }
 
@@ -59,7 +59,7 @@
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--mat-sys-primary, #005fb8);
-    flex: 2; // Prioriza espaço para o tipo e empresa do transporte
+    flex: 2;
   }
 
   .item-dates {
@@ -70,7 +70,7 @@
 
     @media (max-width: 600px) {
       justify-content: flex-start;
-      padding-left: 1.75rem; // Alinha a data abaixo do título no mobile
+      padding-left: 1.75rem;
     }
   }
 }
@@ -85,7 +85,6 @@
 
   .details-grid {
     display: grid;
-    // Distribui os dados logísticos de forma elástica
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem;
     font-size: 0.95rem;
@@ -97,8 +96,15 @@
 
     .price-value {
       font-weight: 700;
-      color: var(--mat-sys-tertiary, #2e7d32); // Destaque financeiro em verde
+      color: var(--mat-sys-tertiary, #2e7d32);
     }
+  }
+
+  // Lembrete visual para campos vazios (Ex: Carrier não registrado)
+  .empty-field-reminder {
+    color: var(--mat-sys-on-surface-variant, #888888);
+    font-style: italic;
+    font-size: 0.9rem;
   }
 
   .notes-section {

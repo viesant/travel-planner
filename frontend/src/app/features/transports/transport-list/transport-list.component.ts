@@ -11,6 +11,7 @@ import { TransportService } from '../services/transport.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
 import { TransportType } from '../../../shared/models/transport-type';
+import { TransportFormComponent } from '../transport-form/transport-form.component';
 
 @Component({
   selector: 'app-transport-list',
@@ -22,6 +23,7 @@ import { TransportType } from '../../../shared/models/transport-type';
     MatIconModule,
     MatListModule,
     MatExpansionModule,
+    TransportFormComponent,
   ],
   templateUrl: './transport-list.component.html',
   styleUrl: './transport-list.component.scss',

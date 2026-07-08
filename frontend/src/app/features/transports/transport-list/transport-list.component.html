@@ -21,15 +21,26 @@
             <mat-expansion-panel-header class="panel-header">
               <mat-panel-title class="item-name">
                 <mat-icon color="primary">{{ getTransportIcon(item.type) }}</mat-icon>
-                <span>{{ item.type }} — {{ item.carrier }}</span>
+                <span>{{ item.departureLocation }} ➔ {{ item.arrivalLocation }}</span>
               </mat-panel-title>
               <mat-panel-description class="item-dates">
+                @if (item.carrier) {
+                  <span class="carrier-badge">{{ item.carrier }} — </span>
+                }
                 {{ item.departureDateTime | date: 'MM/dd/yyyy HH:mm' }}
               </mat-panel-description>
             </mat-expansion-panel-header>
 
             <div class="panel-content">
               <div class="details-grid">
+                <p>
+                  <strong>Carrier / Company:</strong>
+                  @if (item.carrier) {
+                    <span> {{ item.carrier }}</span>
+                  } @else {
+                    <span class="empty-field-reminder">Not registered yet</span>
+                  }
+                </p>
                 <p><strong>Departure:</strong> {{ item.departureLocation }}</p>
                 <p><strong>Departure Address:</strong> {{ item.departureAddress }}</p>
                 <p><strong>Arrival:</strong> {{ item.arrivalLocation }}</p>
@@ -43,7 +54,6 @@
                   {{ item.arrivalDateTime | date: 'MM/dd/yyyy HH:mm' }}
                 </p>
 
-                <!-- CORREÇÃO: Alterado de ticketNumber para bookingNumber -->
                 @if (item.bookingNumber) {
                   <p><strong>Booking / Ticket No:</strong> {{ item.bookingNumber }}</p>
                 }
@@ -83,10 +93,10 @@
     }
   </div>
 } @else {
-  <!-- <app-transport-form
+  <app-transport-form
     [tripId]="tripId()"
     [transportToEdit]="selectedTransport()"
     (formClosed)="closeForm()"
   >
-  </app-transport-form> -->
+  </app-transport-form>
 }
