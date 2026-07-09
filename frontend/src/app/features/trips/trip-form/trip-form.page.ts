@@ -8,12 +8,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { ProblemDetails } from '../../../shared/models/problem-details';
+import { formatToLocalDate } from '../../../shared/utils/date.util';
+import { parseAndValidateId } from '../../../shared/utils/number.util';
 import { Trip } from '../models/trip';
 import { TripRequest } from '../models/trip-request';
 import { TripService } from '../services/trip.service';
 
 @Component({
   selector: 'app-trip-form',
+  standalone: true,
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
@@ -50,14 +53,14 @@ export class TripFormPage implements OnInit {
     }
   }
 
-  private loadTripIntoForm() {
+  private loadTripIntoForm(): void {
     this.isLoading.set(true);
     this.errorMessage.set(null);
 
-    const numericId = Number(this.id());
+    const numericId = parseAndValidateId(this.id());
 
-    if (isNaN(numericId)) {
-      console.warn(`Invalid ID detected: "${numericId}". Redirecting to safety.`);
+    if (!numericId) {
+      console.warn(`Invalid ID detected: "${this.id()}". Redirecting to safety.`);
       this.router.navigate(['/trips']);
       return;
     }
@@ -71,7 +74,6 @@ export class TripFormPage implements OnInit {
           endDate: trip.endDate,
         });
         this.isLoading.set(false);
-        console.log(trip);
       },
       error: (error: HttpErrorResponse) => {
         const problem: ProblemDetails = error.error;
@@ -90,7 +92,14 @@ export class TripFormPage implements OnInit {
     this.isLoading.set(true);
     this.errorMessage.set(null);
 
-    const tripData: TripRequest = this.tripForm.getRawValue();
+    const rawValue = this.tripForm.getRawValue();
+
+    const tripData: TripRequest = {
+      title: rawValue.title,
+      description: rawValue.description,
+      startDate: formatToLocalDate(rawValue.startDate),
+      endDate: formatToLocalDate(rawValue.endDate),
+    };
 
     if (this.isEditMode()) {
       this.updateTrip(tripData);
@@ -100,22 +109,18 @@ export class TripFormPage implements OnInit {
   }
 
   updateTrip(tripData: TripRequest): void {
-    const numericId = Number(this.id());
+    const numericId = parseAndValidateId(this.id());
+    if (!numericId) return;
 
     this.tripService.update(numericId, tripData).subscribe({
       next: (trip: Trip) => {
-        console.log(trip);
-
         this.router.navigate(['trips', trip.id]);
       },
       error: (error: HttpErrorResponse) => {
         console.error('Trip update failed:', error);
         this.isLoading.set(false);
-
         const problem: ProblemDetails = error.error;
-        this.errorMessage.set(
-          problem?.detail || 'Failed to update new trip. Please check your data',
-        );
+        this.errorMessage.set(problem?.detail || 'Failed to update trip. Please check your data');
       },
     });
   }
@@ -123,14 +128,11 @@ export class TripFormPage implements OnInit {
   createTrip(tripData: TripRequest): void {
     this.tripService.create(tripData).subscribe({
       next: (trip: Trip) => {
-        console.log(trip);
-
         this.router.navigate(['trips', trip.id]);
       },
       error: (error: HttpErrorResponse) => {
         console.error('Trip creation failed:', error);
         this.isLoading.set(false);
-
         const problem: ProblemDetails = error.error;
         this.errorMessage.set(
           problem?.detail || 'Failed to create new trip. Please check your data',

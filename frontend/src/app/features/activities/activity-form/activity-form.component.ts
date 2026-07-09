@@ -14,7 +14,7 @@ import { Activity } from '../models/activity';
 import { ActivityRequest } from '../models/activity-request';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
-import { parseAndValidateId } from '../../../shared/utils/number.utils';
+import { parseAndValidateId } from '../../../shared/utils/number.util';
 import { mergeDateAndTime } from '../../../shared/utils/date.util';
 
 @Component({

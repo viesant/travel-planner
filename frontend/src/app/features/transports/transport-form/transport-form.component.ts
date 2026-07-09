@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { DatePipe } from '@angular/common';
-import { parseAndValidateId } from '../../../shared/utils/number.utils';
+import { parseAndValidateId } from '../../../shared/utils/number.util';
 import { mergeDateAndTime } from '../../../shared/utils/date.util';
 
 @Component({
@@ -29,7 +29,6 @@ import { mergeDateAndTime } from '../../../shared/utils/date.util';
     MatDatepickerModule,
     MatSelectModule,
     MatTimepickerModule,
-    DatePipe,
   ],
   templateUrl: './transport-form.component.html',
   styleUrl: './transport-form.component.scss',

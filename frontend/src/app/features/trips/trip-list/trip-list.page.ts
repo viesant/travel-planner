@@ -4,19 +4,19 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { ProblemDetails } from '../../../shared/models/problem-details';
 import { Trip } from '../models/trip';
 import { TripService } from '../services/trip.service';
 
 @Component({
   selector: 'app-trip-list',
+  standalone: true,
   imports: [MatCardModule, MatProgressSpinnerModule, MatButtonModule, RouterLink, DatePipe],
   templateUrl: './trip-list.page.html',
   styleUrl: './trip-list.page.scss',
 })
 export class TripListPage implements OnInit {
-  private readonly router = inject(Router);
   private readonly tripService = inject(TripService);
 
   readonly isLoading = signal(false);
@@ -33,14 +33,13 @@ export class TripListPage implements OnInit {
     this.loadTrips();
   }
 
-  loadTrips() {
+  loadTrips(): void {
     this.isLoading.set(true);
     this.errorMessage.set(null);
 
     this.tripService.findAll().subscribe({
       next: (trips: Trip[]) => {
         this.rawTrips.set(trips);
-        console.log(this.rawTrips());
         this.isLoading.set(false);
       },
       error: (error: HttpErrorResponse) => {

@@ -11,7 +11,9 @@
     </mat-card>
   }
 
-  @if (trip(); as data) {
+  @let data = trip();
+
+  @if (data) {
     <header class="trip-header">
       <div class="header-content">
         <h1 class="trip-title">{{ data.title }}</h1>
@@ -23,6 +25,9 @@
         </p>
       </div>
       <div class="header-actions">
+        <button mat-icon-button color="warn" (click)="deleteTrip(data.id)" title="Delete trip">
+          <mat-icon>delete</mat-icon>
+        </button>
         <button mat-icon-button [routerLink]="['/trips', data.id, 'edit']" title="Edit trip">
           <mat-icon>edit</mat-icon>
         </button>

@@ -70,4 +70,20 @@ export class TripDetailPage implements OnInit {
       },
     });
   }
+
+  deleteTrip(itemId: number) {
+    this.isLoading.set(true);
+    this.errorMessage.set(null);
+
+    this.tripService.delete(itemId).subscribe({
+      next: () => {
+        this.router.navigate(['/trips']);
+      },
+      error: (error: HttpErrorResponse) => {
+        const problem: ProblemDetails = error.error;
+        this.errorMessage.set(problem?.detail || 'Failed to delete trip');
+        this.isLoading.set(false);
+      },
+    });
+  }
 }
