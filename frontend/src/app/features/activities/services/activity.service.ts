@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Activity } from '../../../shared/models/activity';
+import { Activity } from '../models/activity';
 import { ActivityRequest } from '../models/activity-request';
 
 @Injectable({

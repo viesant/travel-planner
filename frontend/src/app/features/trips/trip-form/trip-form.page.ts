@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { ProblemDetails } from '../../../shared/models/problem-details';
-import { Trip } from '../../../shared/models/trip';
+import { Trip } from '../models/trip';
 import { TripRequest } from '../models/trip-request';
 import { TripService } from '../services/trip.service';
 

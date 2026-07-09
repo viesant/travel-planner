@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Accommodation } from '../../../shared/models/accommodation';
+import { Accommodation } from '../models/accommodation';
 import { ProblemDetails } from '../../../shared/models/problem-details';
 import { AccommodationService } from '../services/accommodation.service';
 import { MatListModule } from '@angular/material/list';

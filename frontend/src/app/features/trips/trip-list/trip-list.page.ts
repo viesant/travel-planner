@@ -6,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterLink } from '@angular/router';
 import { ProblemDetails } from '../../../shared/models/problem-details';
-import { Trip } from '../../../shared/models/trip';
+import { Trip } from '../models/trip';
 import { TripService } from '../services/trip.service';
 
 @Component({

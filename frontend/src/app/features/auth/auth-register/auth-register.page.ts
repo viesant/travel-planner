@@ -6,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../core/auth/services/auth.service';
+import { AuthService } from '../../../core/security/services/auth.service';
 import { ProblemDetails } from '../../../shared/models/problem-details';
 import { RegisterRequest } from '../models/register-request';
 

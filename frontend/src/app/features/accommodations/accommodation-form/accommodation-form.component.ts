@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { AccommodationService } from '../services/accommodation.service';
-import { Accommodation } from '../../../shared/models/accommodation';
+import { Accommodation } from '../models/accommodation';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
 import { AccommodationRequest } from '../models/accommodation-request';

@@ -10,7 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { ActivityService } from '../services/activity.service';
 import { Router } from '@angular/router';
-import { Activity } from '../../../shared/models/activity';
+import { Activity } from '../models/activity';
 import { ActivityRequest } from '../models/activity-request';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
@@ -26,7 +26,6 @@ import { ProblemDetails } from '../../../shared/models/problem-details';
     MatDatepickerModule,
     MatSelectModule,
     MatTimepickerModule,
-    DatePipe,
   ],
   templateUrl: './activity-form.component.html',
   styleUrl: './activity-form.component.scss',

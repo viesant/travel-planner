@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AccommodationRequest } from '../models/accommodation-request';
 import { Observable } from 'rxjs';
-import { Accommodation } from '../../../shared/models/accommodation';
+import { Accommodation } from '../models/accommodation';
 
 @Injectable({
   providedIn: 'root',

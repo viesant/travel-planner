@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivityService } from '../services/activity.service';
-import { Activity } from '../../../shared/models/activity';
+import { Activity } from '../models/activity';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
 import { ActivityFormComponent } from '../activity-form/activity-form.component';

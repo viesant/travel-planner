@@ -6,11 +6,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Transport } from '../../../shared/models/transport';
+import { Transport } from '../models/transport';
 import { TransportService } from '../services/transport.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
-import { TRANSPORT_TYPES, TransportType } from '../../../shared/models/transport-type';
+import { TRANSPORT_TYPES, TransportType } from '../models/transport-type';
 import { TransportFormComponent } from '../transport-form/transport-form.component';
 
 @Component({

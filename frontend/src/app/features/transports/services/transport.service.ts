@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Transport } from '../../../shared/models/transport';
+import { Transport } from '../models/transport';
 import { TransportRequest } from '../models/transport-request';
 
 @Injectable({

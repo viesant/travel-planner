@@ -1,4 +1,4 @@
-import { TransportType } from '../../../shared/models/transport-type';
+import { TransportType } from './transport-type';
 
 export interface TransportRequest {
   type: TransportType;

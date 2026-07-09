@@ -3,8 +3,8 @@ import { Component, computed, inject, input, OnInit, output, signal } from '@ang
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProblemDetails } from '../../../shared/models/problem-details';
-import { Transport } from '../../../shared/models/transport';
-import { TRANSPORT_TYPES, TransportType } from '../../../shared/models/transport-type';
+import { Transport } from '../models/transport';
+import { TRANSPORT_TYPES, TransportType } from '../models/transport-type';
 import { TransportRequest } from '../models/transport-request';
 import { TransportService } from '../services/transport.service';
 import { MatButtonModule } from '@angular/material/button';
