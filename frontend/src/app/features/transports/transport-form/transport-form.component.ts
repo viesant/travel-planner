@@ -15,6 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { DatePipe } from '@angular/common';
+import { parseAndValidateId } from '../../../shared/utils/number.utils';
+import { mergeDateAndTime } from '../../../shared/utils/date.util';
 
 @Component({
   selector: 'app-transport-form',
@@ -49,7 +51,7 @@ export class TransportFormComponent implements OnInit {
   readonly transportTypes = TRANSPORT_TYPES;
 
   readonly transportForm = this.fb.nonNullable.group({
-    type: [TRANSPORT_TYPES[0].value as TransportType, [Validators.required]],
+    type: ['' as TransportType, [Validators.required]],
     carrier: [''],
     departureLocation: ['', [Validators.required]],
     departureAddress: [''],
@@ -65,7 +67,7 @@ export class TransportFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    if (!this.parseAndValidateId(this.tripId())) {
+    if (!parseAndValidateId(this.tripId())) {
       console.warn('Invalid Trip ID on form initialization. Redirecting.');
       this.router.navigate(['/trips']);
       this.formClosed.emit();
@@ -75,19 +77,6 @@ export class TransportFormComponent implements OnInit {
     if (this.isEditMode()) {
       this.loadTransportIntoForm();
     }
-  }
-
-  private parseAndValidateId(id: any): number | null {
-    if (id === null || id === undefined) {
-      return null;
-    }
-
-    const numericId = Number(id);
-    if (!Number.isInteger(numericId) || numericId <= 0) {
-      return null;
-    }
-
-    return numericId;
   }
 
   private loadTransportIntoForm(): void {
@@ -134,8 +123,8 @@ export class TransportFormComponent implements OnInit {
       departureAddress: rawValue.departureAddress,
       arrivalLocation: rawValue.arrivalLocation,
       arrivalAddress: rawValue.arrivalAddress,
-      departureDateTime: this.mergeDateAndTime(rawValue.departureDate, rawValue.departureTime),
-      arrivalDateTime: this.mergeDateAndTime(rawValue.arrivalDate, rawValue.arrivalTime),
+      departureDateTime: mergeDateAndTime(rawValue.departureDate, rawValue.departureTime),
+      arrivalDateTime: mergeDateAndTime(rawValue.arrivalDate, rawValue.arrivalTime),
       bookingNumber: rawValue.bookingNumber,
       price: Number(rawValue.price),
       notes: rawValue.notes,
@@ -146,21 +135,6 @@ export class TransportFormComponent implements OnInit {
     } else {
       this.createTransport(requestData);
     }
-  }
-
-  private mergeDateAndTime(dateValue: any, timeValue: any): string {
-    if (!dateValue || !timeValue) return '';
-
-    const d = new Date(dateValue);
-    const t = new Date(timeValue);
-
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    const hours = String(t.getHours()).padStart(2, '0');
-    const minutes = String(t.getMinutes()).padStart(2, '0');
-
-    return `${year}-${month}-${day}T${hours}:${minutes}:00`;
   }
 
   private createTransport(data: TransportRequest): void {

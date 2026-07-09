@@ -72,11 +72,7 @@
                 formControlName="startTime"
                 placeholder="HH:mm"
               />
-              <mat-timepicker-toggle
-                matIconSuffix
-                [for]="startTime"
-                (click)="startTime.open()"
-              ></mat-timepicker-toggle>
+              <mat-timepicker-toggle matIconSuffix [for]="startTime"></mat-timepicker-toggle>
               <mat-timepicker interval="15min" #startTime></mat-timepicker>
             </mat-form-field>
           </div>
@@ -89,6 +85,7 @@
                 [matDatepicker]="endDate"
                 formControlName="endDate"
                 placeholder="MM/dd/yyyy"
+                [min]="activityForm.get('startDate')?.value"
               />
               <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
               <mat-datepicker #endDate [touchUi]="true"></mat-datepicker>
@@ -102,11 +99,7 @@
                 formControlName="endTime"
                 placeholder="HH:mm"
               />
-              <mat-timepicker-toggle
-                matIconSuffix
-                [for]="endTime"
-                (click)="endTime.open()"
-              ></mat-timepicker-toggle>
+              <mat-timepicker-toggle matIconSuffix [for]="endTime"></mat-timepicker-toggle>
               <mat-timepicker interval="15min" #endTime></mat-timepicker>
             </mat-form-field>
           </div>

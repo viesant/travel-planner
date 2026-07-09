@@ -14,6 +14,8 @@ import { Activity } from '../models/activity';
 import { ActivityRequest } from '../models/activity-request';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
+import { parseAndValidateId } from '../../../shared/utils/number.utils';
+import { mergeDateAndTime } from '../../../shared/utils/date.util';
 
 @Component({
   selector: 'app-activity-form',
@@ -58,7 +60,7 @@ export class ActivityFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    if (!this.parseAndValidateId(this.tripId())) {
+    if (!parseAndValidateId(this.tripId())) {
       console.warn('Invalid Trip ID on form initialization. Redirecting.');
       this.router.navigate(['/trips']);
       this.formClosed.emit();
@@ -68,19 +70,6 @@ export class ActivityFormComponent implements OnInit {
     if (this.isEditMode()) {
       this.loadActivityIntoForm();
     }
-  }
-
-  private parseAndValidateId(id: any): number | null {
-    if (id === null || id === undefined) {
-      return null;
-    }
-
-    const numericId = Number(id);
-    if (!Number.isInteger(numericId) || numericId <= 0) {
-      return null;
-    }
-
-    return numericId;
   }
 
   private loadActivityIntoForm(): void {
@@ -121,8 +110,8 @@ export class ActivityFormComponent implements OnInit {
       name: rawValue.name,
       location: rawValue.location,
       address: rawValue.address,
-      startDateTime: this.mergeDateAndTime(rawValue.startDate, rawValue.startTime),
-      endDateTime: this.mergeDateAndTime(rawValue.endDate, rawValue.endTime),
+      startDateTime: mergeDateAndTime(rawValue.startDate, rawValue.startTime),
+      endDateTime: mergeDateAndTime(rawValue.endDate, rawValue.endTime),
       bookingNumber: rawValue.bookingNumber,
       price: Number(rawValue.price),
       notes: rawValue.notes,
@@ -133,21 +122,6 @@ export class ActivityFormComponent implements OnInit {
     } else {
       this.createActivity(requestData);
     }
-  }
-
-  private mergeDateAndTime(dateValue: any, timeValue: any): string {
-    if (!dateValue || !timeValue) return '';
-
-    const d = new Date(dateValue);
-    const t = new Date(timeValue);
-
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    const hours = String(t.getHours()).padStart(2, '0');
-    const minutes = String(t.getMinutes()).padStart(2, '0');
-
-    return `${year}-${month}-${day}T${hours}:${minutes}:00`;
   }
 
   private createActivity(data: ActivityRequest): void {

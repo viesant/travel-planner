@@ -115,14 +115,6 @@
             </mat-form-field>
           </div>
 
-          <p>{{ transportForm.controls.departureDate.value }}</p>
-          <p>
-            {{ transportForm.controls.departureDate.value | date: 'dd/MM/yyyy HH:mm' }}
-          </p>
-          <p>{{ transportForm.controls.departureTime.value }}</p>
-          <p>
-            {{ transportForm.controls.departureTime.value | date: 'dd/MM/yyyy HH:mm' }}
-          </p>
           <div class="datetime-group">
             <mat-form-field appearance="outline" (click)="arrDate.open()">
               <mat-label>Arrival Date</mat-label>

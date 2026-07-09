@@ -11,6 +11,8 @@ import { Accommodation } from '../models/accommodation';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
 import { AccommodationRequest } from '../models/accommodation-request';
+import { parseAndValidateId } from '../../../shared/utils/number.utils';
+import { formatToLocalDate } from '../../../shared/utils/date.util';
 
 @Component({
   selector: 'app-accommodation-form',
@@ -46,12 +48,12 @@ export class AccommodationFormComponent implements OnInit {
     bookingNumber: [''],
     checkInDate: ['', [Validators.required]],
     checkOutDate: ['', [Validators.required]],
-    price: [0, [Validators.min(0)]],
+    price: ['', [Validators.min(0)]],
     notes: [''],
   });
 
   ngOnInit(): void {
-    if (!this.parseAndValidateId(this.tripId())) {
+    if (!parseAndValidateId(this.tripId())) {
       console.warn('Invalid Trip ID on form initialization. Redirecting.');
       this.router.navigate(['/trips']);
       return;
@@ -59,19 +61,6 @@ export class AccommodationFormComponent implements OnInit {
     if (this.isEditMode()) {
       this.loadAccommodationIntoForm();
     }
-  }
-
-  private parseAndValidateId(id: any): number | null {
-    if (id === null || id === undefined) {
-      return null;
-    }
-
-    const numericId = Number(id);
-    if (!Number.isInteger(numericId) || numericId <= 0) {
-      return null;
-    }
-
-    return numericId;
   }
 
   private loadAccommodationIntoForm(): void {
@@ -93,7 +82,7 @@ export class AccommodationFormComponent implements OnInit {
       bookingNumber: target.bookingNumber,
       checkInDate: target.checkInDate,
       checkOutDate: target.checkOutDate,
-      price: target.price,
+      price: target.price as any,
       notes: target.notes,
     });
     this.isLoading.set(false);
@@ -107,12 +96,23 @@ export class AccommodationFormComponent implements OnInit {
     this.isLoading.set(true);
     this.errorMessage.set(null);
 
-    const accommodationData: AccommodationRequest = this.accommodationForm.getRawValue();
+    const rawValue = this.accommodationForm.getRawValue();
+
+    const requestData: AccommodationRequest = {
+      name: rawValue.name,
+      location: rawValue.location,
+      address: rawValue.address,
+      bookingNumber: rawValue.bookingNumber,
+      checkInDate: formatToLocalDate(rawValue.checkInDate),
+      checkOutDate: formatToLocalDate(rawValue.checkOutDate),
+      price: Number(rawValue.price),
+      notes: rawValue.notes,
+    };
 
     if (this.isEditMode()) {
-      this.updateAccommodation(accommodationData);
+      this.updateAccommodation(requestData);
     } else {
-      this.createAccommodation(accommodationData);
+      this.createAccommodation(requestData);
     }
   }
 

@@ -19,7 +19,6 @@
 
     <form [formGroup]="accommodationForm" (ngSubmit)="onSubmit()">
       <mat-card-content class="form-body">
-        <!-- Campo: Name -->
         <mat-form-field appearance="outline" class="form-field-full">
           <mat-label>Accommodation Name</mat-label>
           <input
@@ -33,9 +32,7 @@
           }
         </mat-form-field>
 
-        <!-- Container de Localização e Endereço Lado a Lado -->
         <div class="form-row">
-          <!-- Campo: Location (Cidade/Região) -->
           <mat-form-field appearance="outline" class="form-field-half">
             <mat-label>Location / City</mat-label>
             <input
@@ -46,7 +43,6 @@
             />
           </mat-form-field>
 
-          <!-- Campo: Address -->
           <mat-form-field appearance="outline" class="form-field-half">
             <mat-label>Full Address</mat-label>
             <input
@@ -58,9 +54,7 @@
           </mat-form-field>
         </div>
 
-        <!-- Container de Datas Lado a Lado -->
         <div class="form-row">
-          <!-- Campo: Check-in Date -->
           <mat-form-field appearance="outline" class="form-field-half" (click)="startPicker.open()">
             <mat-label>Check-in Date</mat-label>
             <input
@@ -76,7 +70,6 @@
             }
           </mat-form-field>
 
-          <!-- Campo: Check-out Date -->
           <mat-form-field appearance="outline" class="form-field-half" (click)="endPicker.open()">
             <mat-label>Check-out Date</mat-label>
             <input
@@ -94,7 +87,6 @@
           </mat-form-field>
         </div>
 
-        <!-- Container de Preço e Booking Number Lado a Lado -->
         <div class="form-row">
           <!-- Campo: Price -->
           <mat-form-field appearance="outline" class="form-field-half">
@@ -106,7 +98,6 @@
             }
           </mat-form-field>
 
-          <!-- Campo: Booking Number -->
           <mat-form-field appearance="outline" class="form-field-half">
             <mat-label>Booking Number / Confirmation</mat-label>
             <input
@@ -118,7 +109,6 @@
           </mat-form-field>
         </div>
 
-        <!-- Campo: Notes -->
         <mat-form-field appearance="outline" class="form-field-full">
           <mat-label>Notes & Observations</mat-label>
           <textarea
@@ -130,9 +120,7 @@
         </mat-form-field>
       </mat-card-content>
 
-      <!-- Botões de Ação Regulados pelo Estado de Loading -->
       <mat-card-actions align="end" class="form-actions">
-        <!-- Dispara o output para fechar a tela ao cancelar -->
         <button mat-button type="button" (click)="formClosed.emit()" [disabled]="isLoading()">
           Cancel
         </button>

@@ -59,7 +59,6 @@ export class ActivityListComponent implements OnInit {
       next: (data: Activity[]) => {
         this.rawActivities.set(data);
         this.isLoading.set(false);
-        console.log(this.rawActivities());
       },
       error: (error: HttpErrorResponse) => {
         const problem: ProblemDetails = error.error;
