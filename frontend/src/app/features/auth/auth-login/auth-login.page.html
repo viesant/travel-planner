@@ -15,7 +15,13 @@
       <mat-card-content class="form-body">
         <mat-form-field appearance="outline" class="form-field-full">
           <mat-label>Email Address</mat-label>
-          <input matInput type="email" formControlName="email" placeholder="example@email.com" />
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            placeholder="example@email.com"
+            autofocus
+          />
           @if (loginForm.get('email')?.hasError('email')) {
             <mat-error>Please enter a valid email address.</mat-error>
           }
