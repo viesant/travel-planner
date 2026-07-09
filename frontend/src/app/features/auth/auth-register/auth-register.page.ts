@@ -42,7 +42,6 @@ export class AuthRegisterPage {
     }
 
     this.errorMessage.set(null);
-
     const userData: RegisterRequest = this.registerForm.getRawValue();
 
     this.authService.register(userData).subscribe({
@@ -51,7 +50,6 @@ export class AuthRegisterPage {
       },
       error: (error: HttpErrorResponse) => {
         console.error('Registration failed:', error);
-
         const problem: ProblemDetails = error.error;
         this.errorMessage.set(
           problem?.detail || 'Failed to create account. Please check your data',

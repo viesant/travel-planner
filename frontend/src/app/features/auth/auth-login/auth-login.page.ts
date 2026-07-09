@@ -41,7 +41,6 @@ export class AuthLoginPage {
     }
 
     this.errorMessage.set(null);
-
     const credentials: AuthRequest = this.loginForm.getRawValue();
 
     this.authService.login(credentials).subscribe({
@@ -49,6 +48,7 @@ export class AuthLoginPage {
         this.router.navigate(['/trips']);
       },
       error: (error: HttpErrorResponse) => {
+        // CORREÇÃO: Tipagem estrita aplicada
         console.error('Authentication failed: ', error);
         const problem: ProblemDetails = error.error;
         this.errorMessage.set(problem?.detail || 'Invalid email or password. Please try again.');
