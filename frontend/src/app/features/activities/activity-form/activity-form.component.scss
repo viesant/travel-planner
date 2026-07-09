@@ -1,5 +1,5 @@
 :host {
-  display: block; // Garante que o componente se comporte como uma div bloco na tela
+  display: block;
   width: 100%;
 
   .form-container {
@@ -50,6 +50,7 @@
     }
   }
 
+  // Suporte específico para alinhar os pares de [Calendário + Relógio] na mesma linha
   .datetime-group {
     flex: 1;
     display: flex;

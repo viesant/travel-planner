@@ -10,6 +10,7 @@ import { ActivityService } from '../services/activity.service';
 import { Activity } from '../../../shared/models/activity';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
+import { ActivityFormComponent } from '../activity-form/activity-form.component';
 
 @Component({
   selector: 'app-activity-list',
@@ -21,6 +22,7 @@ import { ProblemDetails } from '../../../shared/models/problem-details';
     MatIconModule,
     MatListModule,
     MatExpansionModule,
+    ActivityFormComponent,
   ],
   templateUrl: './activity-list.component.html',
   styleUrl: './activity-list.component.scss',
