@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/security/services/auth.service';
@@ -14,6 +15,7 @@ import { RegisterRequest } from '../models/register-request';
   selector: 'app-auth-register',
   imports: [
     ReactiveFormsModule,
+    MatIconModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -29,11 +31,12 @@ export class AuthRegisterPage {
   private readonly fb = inject(FormBuilder);
 
   readonly errorMessage = signal<string | null>(null);
+  readonly hidePassword = signal(true);
 
   readonly registerForm = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
   onSubmit(): void {

@@ -11,7 +11,7 @@ import { Accommodation } from '../models/accommodation';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../shared/models/problem-details';
 import { AccommodationRequest } from '../models/accommodation-request';
-import { parseAndValidateId } from '../../../shared/utils/number.util';
+import { parseAndValidateId } from '../../../shared/utils/number.utils';
 import { formatToLocalDate } from '../../../shared/utils/date.util';
 
 @Component({

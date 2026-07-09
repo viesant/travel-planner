@@ -32,36 +32,38 @@
           }
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="form-field-full" (click)="startPicker.open()">
-          <mat-label>Start Date</mat-label>
-          <input
-            matInput
-            formControlName="startDate"
-            [matDatepicker]="startPicker"
-            placeholder="Choose a date"
-          />
-          <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
-          <mat-datepicker #startPicker [touchUi]="true"></mat-datepicker>
-          @if (tripForm.get('startDate')?.hasError('required')) {
-            <mat-error>Start date is required.</mat-error>
-          }
-        </mat-form-field>
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field-half" (click)="startPicker.open()">
+            <mat-label>Start Date</mat-label>
+            <input
+              matInput
+              formControlName="startDate"
+              [matDatepicker]="startPicker"
+              placeholder="Choose a date"
+            />
+            <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+            <mat-datepicker #startPicker [touchUi]="true"></mat-datepicker>
+            @if (tripForm.get('startDate')?.hasError('required')) {
+              <mat-error>Start date is required.</mat-error>
+            }
+          </mat-form-field>
 
-        <mat-form-field appearance="outline" class="form-field-full" (click)="endPicker.open()">
-          <mat-label>End Date</mat-label>
-          <input
-            matInput
-            [matDatepicker]="endPicker"
-            formControlName="endDate"
-            [min]="tripForm.get('startDate')?.value"
-            placeholder="Choose a date"
-          />
-          <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
-          <mat-datepicker #endPicker [touchUi]="true"></mat-datepicker>
-          @if (tripForm.get('endDate')?.hasError('required')) {
-            <mat-error>End date is required.</mat-error>
-          }
-        </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field-half" (click)="endPicker.open()">
+            <mat-label>End Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="endPicker"
+              formControlName="endDate"
+              [min]="tripForm.get('startDate')?.value"
+              placeholder="Choose a date"
+            />
+            <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endPicker [touchUi]="true"></mat-datepicker>
+            @if (tripForm.get('endDate')?.hasError('required')) {
+              <mat-error>End date is required.</mat-error>
+            }
+          </mat-form-field>
+        </div>
 
         <mat-form-field appearance="outline" class="form-field-full">
           <mat-label>Description</mat-label>

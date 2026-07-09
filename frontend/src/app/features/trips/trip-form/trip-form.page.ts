@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { ProblemDetails } from '../../../shared/models/problem-details';
 import { formatToLocalDate } from '../../../shared/utils/date.util';
-import { parseAndValidateId } from '../../../shared/utils/number.util';
+import { parseAndValidateId } from '../../../shared/utils/number.utils';
 import { Trip } from '../models/trip';
 import { TripRequest } from '../models/trip-request';
 import { TripService } from '../services/trip.service';

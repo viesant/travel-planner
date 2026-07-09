@@ -24,6 +24,10 @@
                 <span>{{ item.name }}</span>
               </mat-panel-title>
               <mat-panel-description class="item-dates">
+                @if (item.location) {
+                  <span class="location-badge">{{ item.location }}</span>
+                  <span>&nbsp;—&nbsp;</span>
+                }
                 {{ item.checkInDate | date: 'MM/dd/yyyy' }} -
                 {{ item.checkOutDate | date: 'MM/dd/yyyy' }}
               </mat-panel-description>
