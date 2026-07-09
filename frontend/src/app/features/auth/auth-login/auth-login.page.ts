@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/security/services/auth.service';
 import { ProblemDetails } from '../../../shared/models/problem-details';
@@ -21,6 +22,7 @@ import { AuthRequest } from '../models/auth-request';
     MatIconModule,
     MatCardModule,
     RouterLink,
+    MatProgressSpinner,
   ],
   templateUrl: './auth-login.page.html',
   styleUrl: './auth-login.page.scss',
@@ -30,8 +32,8 @@ export class AuthLoginPage {
   private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
 
+  readonly isLoading = signal(false);
   readonly errorMessage = signal<string | null>(null);
-
   readonly hidePassword = signal(true);
 
   readonly loginForm = this.fb.nonNullable.group({
@@ -44,14 +46,18 @@ export class AuthLoginPage {
       return;
     }
 
+    this.isLoading.set(true);
     this.errorMessage.set(null);
+
     const credentials: AuthRequest = this.loginForm.getRawValue();
 
     this.authService.login(credentials).subscribe({
       next: () => {
+        this.isLoading.set(false);
         this.router.navigate(['/trips']);
       },
       error: (error: HttpErrorResponse) => {
+        this.isLoading.set(false);
         console.error('Authentication failed: ', error);
         const problem: ProblemDetails = error.error;
         this.errorMessage.set(problem?.detail || 'Invalid email or password. Please try again.');

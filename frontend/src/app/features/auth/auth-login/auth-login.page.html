@@ -60,10 +60,16 @@
           mat-flat-button
           color="primary"
           type="submit"
-          [disabled]="loginForm.invalid"
+          [disabled]="loginForm.invalid || isLoading()"
           class="submit-button"
         >
-          Sign In
+          @if (isLoading()) {
+            <mat-spinner diameter="20" class="button-spinner"></mat-spinner>
+            <span>Signing In...</span>
+          } @else {
+            <!-- Exibe o texto normal -->
+            <span>Sign In</span>
+          }
         </button>
       </mat-card-actions>
       <a routerLink="/auth/register" class="login-link"> Don't have an account? Sign Up </a>
