@@ -73,8 +73,6 @@ export class AccommodationFormComponent implements OnInit {
       return;
     }
 
-    console.log(target);
-
     this.accommodationForm.patchValue({
       name: target.name,
       location: target.location,

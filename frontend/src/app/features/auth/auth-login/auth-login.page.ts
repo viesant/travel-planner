@@ -11,6 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/security/services/auth.service';
 import { ProblemDetails } from '../../../shared/models/problem-details';
 import { AuthRequest } from '../models/auth-request';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-auth-login',
@@ -48,20 +49,35 @@ export class AuthLoginPage {
 
     this.isLoading.set(true);
     this.errorMessage.set(null);
-
     const credentials: AuthRequest = this.loginForm.getRawValue();
 
-    this.authService.login(credentials).subscribe({
-      next: () => {
-        this.isLoading.set(false);
-        this.router.navigate(['/trips']);
-      },
-      error: (error: HttpErrorResponse) => {
-        this.isLoading.set(false);
-        console.error('Authentication failed: ', error);
-        const problem: ProblemDetails = error.error;
-        this.errorMessage.set(problem?.detail || 'Invalid email or password. Please try again.');
-      },
-    });
+    this.authService
+      .login(credentials)
+      .pipe(switchMap(() => this.authService.fetchMe()))
+      .subscribe({
+        next: () => {
+          this.isLoading.set(false);
+          this.router.navigate(['/trips']);
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error('Authentication or profile fetch failed: ', error);
+          this.isLoading.set(false);
+
+          if (error.status === 0) {
+            this.errorMessage.set(
+              'Cannot connect to the server. Please check if the backend is running.',
+            );
+          } else if (error.status === 500) {
+            this.errorMessage.set(
+              'Database connection failed. Please ensure the Docker containers are healthy.',
+            );
+          } else {
+            const problem: ProblemDetails = error.error;
+            this.errorMessage.set(
+              problem?.detail || 'Invalid email or password. Please try again.',
+            );
+          }
+        },
+      });
   }
 }
