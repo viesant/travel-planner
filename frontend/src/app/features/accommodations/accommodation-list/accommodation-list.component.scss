@@ -27,7 +27,7 @@
 .accommodation-accordion {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; // Cria um pequeno espaçamento entre cada linha horizontal
+  gap: 0.5rem;
   box-shadow: none !important;
 }
 
@@ -58,7 +58,7 @@
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--mat-sys-primary, #005fb8);
-    flex: 2; // Dá mais espaço horizontal para o nome do hotel
+    flex: 2;
   }
 
   .item-dates {
@@ -69,7 +69,7 @@
 
     @media (max-width: 600px) {
       justify-content: flex-start;
-      padding-left: 1.75rem; // Alinha o texto da data abaixo do nome no celular
+      padding-left: 1.75rem;
     }
   }
 }

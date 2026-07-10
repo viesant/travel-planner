@@ -10,6 +10,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/security/services/auth.service';
 import { ProblemDetails } from '../../../shared/models/problem-details';
 import { RegisterRequest } from '../models/register-request';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-auth-register',
@@ -21,6 +22,7 @@ import { RegisterRequest } from '../models/register-request';
     MatInputModule,
     MatCardModule,
     RouterLink,
+    MatProgressSpinner,
   ],
   templateUrl: './auth-register.page.html',
   styleUrl: './auth-register.page.scss',
@@ -30,6 +32,7 @@ export class AuthRegisterPage {
   private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
 
+  readonly isLoading = signal(false);
   readonly errorMessage = signal<string | null>(null);
   readonly hidePassword = signal(true);
 
@@ -44,14 +47,18 @@ export class AuthRegisterPage {
       return;
     }
 
+    this.isLoading.set(true);
     this.errorMessage.set(null);
+
     const userData: RegisterRequest = this.registerForm.getRawValue();
 
     this.authService.register(userData).subscribe({
       next: () => {
+        this.isLoading.set(true);
         this.router.navigate(['/auth/login']);
       },
       error: (error: HttpErrorResponse) => {
+        this.isLoading.set(true);
         console.error('Registration failed:', error);
         const problem: ProblemDetails = error.error;
         this.errorMessage.set(

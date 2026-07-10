@@ -24,7 +24,6 @@
   }
 }
 
-// Estilização do Grupo de Painéis Linha por Linha
 .transport-accordion {
   display: flex;
   flex-direction: column;
@@ -75,7 +74,6 @@
   }
 }
 
-// Estilização do Conteúdo Expandido (Dados de Logística)
 .panel-content {
   padding-top: 1rem;
   border-top: 1px dashed var(--mat-sys-outline-variant, #e0e0e0);
@@ -100,7 +98,6 @@
     }
   }
 
-  // Lembrete visual para campos vazios (Ex: Carrier não registrado)
   .empty-field-reminder {
     color: var(--mat-sys-on-surface-variant, #888888);
     font-style: italic;
@@ -131,7 +128,6 @@
   }
 }
 
-// Visual do Estado Vazio (Empty State)
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -158,7 +154,6 @@
   }
 }
 
-// Estados Auxiliares
 .loading-shade {
   display: flex;
   justify-content: center;
