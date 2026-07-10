@@ -1,9 +1,10 @@
-# 🌍 Travel Planner API
+# 🌍 Travel Planner Backend
 
 [![Java](https://img.shields.io/badge/Java-25-orange?logo=java&logoColor=white)](https://adoptium.net)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?logo=docker&logoColor=white)](https://www.docker.com)
 
+Backend application for the Travel Planner platform.
 
 REST API for managing trips, accommodations, activities, and transports. Built with Spring Boot, JWT authentication, and a clean layered architecture.
 
