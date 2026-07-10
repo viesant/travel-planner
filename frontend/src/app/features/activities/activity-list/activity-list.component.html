@@ -1,0 +1,84 @@
+@if (!isFormOpen()) {
+  <div class="activities-container">
+    <div class="actions-bar">
+      <h2>Planned Activities & Sights 🏛️</h2>
+      <button mat-raised-button color="primary" (click)="openCreateForm()">
+        <mat-icon>add</mat-icon>
+        Add Activity
+      </button>
+    </div>
+
+    @if (isLoading()) {
+      <div class="loading-shade">
+        <mat-spinner></mat-spinner>
+      </div>
+    } @else if (errorMessage()) {
+      <div class="error-box">⚠️ {{ errorMessage() }}</div>
+    } @else {
+      <mat-accordion class="activity-accordion" multi="true">
+        @for (item of sortedActivities(); track item.id) {
+          <mat-expansion-panel class="activity-panel">
+            <mat-expansion-panel-header class="panel-header">
+              <mat-panel-title class="item-name">
+                <mat-icon color="primary">local_activity</mat-icon>
+                <span>{{ item.name }}</span>
+              </mat-panel-title>
+
+              <mat-panel-description class="item-dates">
+                @if (item.location) {
+                  <span class="location-badge">{{ item.location }}</span>
+                  <span>&nbsp;—&nbsp;</span>
+                }
+                <span>{{ item.startDateTime | date: 'MM/dd/yyyy HH:mm' }}</span>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="panel-content">
+              <div class="details-grid">
+                <p><strong>Location:</strong> {{ item.location || 'Not specified' }}</p>
+                <p>
+                  <strong>Start Time:</strong> {{ item.startDateTime | date: 'MM/dd/yyyy HH:mm' }}
+                </p>
+                <p><strong>End Time:</strong> {{ item.endDateTime | date: 'MM/dd/yyyy HH:mm' }}</p>
+                <p>
+                  <strong>Cost:</strong>
+                  <span class="price-value">{{ item.price | currency: 'EUR' }}</span>
+                </p>
+              </div>
+
+              @if (item.notes) {
+                <div class="notes-section">
+                  <strong>Notes & Reminders:</strong>
+                  <p class="notes-text">{{ item.notes }}</p>
+                </div>
+              }
+
+              <div class="panel-actions">
+                <button mat-button color="primary" (click)="openEditForm(item)">
+                  <mat-icon>edit</mat-icon>
+                  Edit
+                </button>
+                <button mat-button color="warn" (click)="deleteActivity(item)">
+                  <mat-icon>delete</mat-icon>
+                  Delete
+                </button>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        } @empty {
+          <div class="empty-state">
+            <mat-icon class="empty-icon">local_see</mat-icon>
+            <p>No activities scheduled for this trip yet.</p>
+          </div>
+        }
+      </mat-accordion>
+    }
+  </div>
+} @else {
+  <app-activity-form
+    [tripId]="tripId()"
+    [activityToEdit]="selectedActivity()"
+    (formClosed)="closeForm()"
+  >
+  </app-activity-form>
+}

@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { TripDetailPage } from './trip-detail.page';
+
+describe('TripDetailPage', () => {
+  let component: TripDetailPage;
+  let fixture: ComponentFixture<TripDetailPage>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TripDetailPage],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TripDetailPage);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { TransportListComponent } from './transport-list.component';
+
+describe('TransportListComponent', () => {
+  let component: TransportListComponent;
+  let fixture: ComponentFixture<TransportListComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TransportListComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TransportListComponent);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

@@ -1,0 +1,45 @@
+<div class="list-container">
+  <header class="header-bar">
+    <h2>My Trips ✈️</h2>
+    <button mat-flat-button color="primary" routerLink="/trips/new">+ New Trip</button>
+  </header>
+
+  @if (isLoading()) {
+    <div class="loading-center">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else if (errorMessage()) {
+    <mat-card class="error-card">
+      <mat-card-content>⚠️ {{ errorMessage() }}</mat-card-content>
+    </mat-card>
+  } @else {
+    <div class="trip-grid">
+      @for (trip of sortedTrips(); track trip.id) {
+        <mat-card class="trip-card">
+          <mat-card-header>
+            <mat-card-title class="card-title">{{ trip.title }}</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content class="card-body">
+            <p class="description-text">
+              {{ trip.description || 'No description provided for this trip.' }}
+            </p>
+            <p class="dates">
+              📅 {{ trip.startDate | date: 'dd/MM/yyyy' }} → {{ trip.endDate | date: 'dd/MM/yyyy' }}
+            </p>
+          </mat-card-content>
+
+          <mat-card-actions align="end" class="card-actions">
+            <button mat-stroked-button color="primary" [routerLink]="['/trips', trip.id]">
+              View Details
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      } @empty {
+        <mat-card class="empty-card">
+          <mat-card-content>No trips found. Start by adding a new one!</mat-card-content>
+        </mat-card>
+      }
+    </div>
+  }
+</div>

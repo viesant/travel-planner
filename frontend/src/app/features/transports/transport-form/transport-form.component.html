@@ -1,0 +1,200 @@
+<div class="form-container">
+  <mat-card class="form-card">
+    <mat-card-header class="form-header">
+      <mat-card-title class="form-title">
+        {{ isEditMode() ? 'Edit Transport Logistics 📝' : 'Add New Transport Ticket 🚇' }}
+      </mat-card-title>
+      <mat-card-subtitle class="form-subtitle">
+        {{
+          isEditMode()
+            ? 'Update your transit and booking information'
+            : 'Enter your travel tickets and transit details'
+        }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    @if (errorMessage()) {
+      <div class="error-box">⚠️ {{ errorMessage() }}</div>
+    }
+
+    <form [formGroup]="transportForm" (ngSubmit)="onSubmit()">
+      <mat-card-content class="form-body">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field-half">
+            <mat-label>Transport Type</mat-label>
+            <mat-select formControlName="type">
+              @for (mode of transportTypes; track mode.value) {
+                <mat-option [value]="mode.value">{{ mode.label }}</mat-option>
+              }
+            </mat-select>
+            @if (transportForm.get('type')?.hasError('required')) {
+              <mat-error>Type is required.</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field-half">
+            <mat-label>Carrier / Company Name</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="carrier"
+              placeholder="Ex: Delta Airlines, Eurostar, Uber"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field-half">
+            <mat-label>Departure Location</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="departureLocation"
+              placeholder="Ex: JFK Airport, Gare du Nord"
+            />
+            @if (transportForm.get('departureLocation')?.hasError('required')) {
+              <mat-error>Departure location is required.</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field-half">
+            <mat-label>Departure Address</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="departureAddress"
+              placeholder="Ex: Queens, NY 11430"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field-half">
+            <mat-label>Arrival Location</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="arrivalLocation"
+              placeholder="Ex: Heathrow Airport, Berlin Hbf"
+            />
+            @if (transportForm.get('arrivalLocation')?.hasError('required')) {
+              <mat-error>Arrival location is required.</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field-half">
+            <mat-label>Arrival Address</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="arrivalAddress"
+              placeholder="Ex: Hounslow TW6"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="form-row datetime-row">
+          <div class="datetime-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Departure Date</mat-label>
+              <input
+                matInput
+                [matDatepicker]="depDate"
+                formControlName="departureDate"
+                placeholder="dd/mm/yyyy"
+              />
+              <mat-datepicker-toggle matIconSuffix [for]="depDate"></mat-datepicker-toggle>
+              <mat-datepicker #depDate></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Departure Time</mat-label>
+              <input
+                matInput
+                [matTimepicker]="depTime"
+                formControlName="departureTime"
+                placeholder="hh:mm"
+              />
+              <mat-timepicker-toggle matIconSuffix [for]="depTime"></mat-timepicker-toggle>
+              <mat-timepicker interval="15min" #depTime></mat-timepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="datetime-group">
+            <mat-form-field appearance="outline" (click)="arrDate.open()">
+              <mat-label>Arrival Date</mat-label>
+              <input
+                matInput
+                [matDatepicker]="arrDate"
+                formControlName="arrivalDate"
+                placeholder="dd/mm/yyyy"
+                [min]="transportForm.get('departureDate')?.value"
+              />
+              <mat-datepicker-toggle matIconSuffix [for]="arrDate"></mat-datepicker-toggle>
+              <mat-datepicker #arrDate></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Arrival Time</mat-label>
+              <input
+                matInput
+                [matTimepicker]="arrTime"
+                formControlName="arrivalTime"
+                placeholder="hh:mm"
+              />
+              <mat-timepicker-toggle matIconSuffix [for]="arrTime"></mat-timepicker-toggle>
+              <mat-timepicker interval="15min" #arrTime></mat-timepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field-half">
+            <mat-label>Price / Cost</mat-label>
+            <input matInput type="number" formControlName="price" placeholder="0.00" />
+            <span matTextPrefix>€&nbsp;</span>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field-half">
+            <mat-label>Booking / Ticket Number</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="bookingNumber"
+              placeholder="Ex: LH-43210"
+            />
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="form-field-full">
+          <mat-label>Notes & Reminders</mat-label>
+          <textarea
+            matInput
+            formControlName="notes"
+            placeholder="Terminal details, baggage allowance, online check-in links..."
+            rows="3"
+          ></textarea>
+        </mat-form-field>
+      </mat-card-content>
+
+      <mat-card-actions align="end" class="form-actions">
+        <button mat-button type="button" (click)="formClosed.emit()" [disabled]="isLoading()">
+          Cancel
+        </button>
+
+        <button
+          mat-flat-button
+          type="submit"
+          [disabled]="transportForm.invalid || isLoading()"
+          class="submit-button"
+        >
+          @if (isLoading()) {
+            <span>Saving...</span>
+          } @else {
+            <span>{{ isEditMode() ? 'Update Ticket' : 'Save Ticket' }}</span>
+          }
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

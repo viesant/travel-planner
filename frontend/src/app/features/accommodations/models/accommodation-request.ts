@@ -1,0 +1,10 @@
+export interface AccommodationRequest {
+  name: string;
+  location: string;
+  address: string;
+  bookingNumber: string;
+  checkInDate: string;
+  checkOutDate: string;
+  price: number;
+  notes: string;
+}

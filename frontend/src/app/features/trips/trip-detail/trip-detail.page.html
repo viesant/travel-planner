@@ -1,0 +1,99 @@
+<div class="detail-container">
+  @if (isLoading()) {
+    <div class="loading-center">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <mat-card class="error-card">
+      <mat-card-content>⚠️ {{ errorMessage() }}</mat-card-content>
+    </mat-card>
+  }
+
+  @let data = trip();
+
+  @if (data) {
+    <header class="trip-header">
+      <div class="header-content">
+        <h1 class="trip-title">{{ data.title }}</h1>
+        <p class="trip-dates">
+          <mat-icon>calendar_month</mat-icon>
+          <span>
+            {{ data.startDate | date: 'dd/MM/yyyy' }} - {{ data.endDate | date: 'dd/MM/yyyy' }}
+          </span>
+        </p>
+      </div>
+      <div class="header-actions">
+        <button mat-icon-button color="warn" (click)="deleteTrip(data.id)" title="Delete trip">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button [routerLink]="['/trips', data.id, 'edit']" title="Edit trip">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-button routerLink="/trips">
+          <mat-icon>arrow_back</mat-icon>
+          Back
+        </button>
+      </div>
+    </header>
+
+    <mat-tab-group class="trip-tabs" animationDuration="0ms">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">info</mat-icon>
+          <span class="tab-text">Overview</span>
+        </ng-template>
+
+        <div class="tab-content">
+          <mat-card class="overview-card">
+            <mat-card-content>
+              <h3>About this trip</h3>
+              <p class="description-text">
+                {{ data.description || 'No description provided for this trip.' }}
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">hotel</mat-icon>
+          <span class="tab-text">Accommodations</span>
+        </ng-template>
+
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-accommodation-list [tripId]="data.id"></app-accommodation-list>
+          </div>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">directions_bus</mat-icon>
+          <span class="tab-text">Transports</span>
+        </ng-template>
+
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-transport-list [tripId]="data.id"></app-transport-list>
+          </div>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">local_activity</mat-icon>
+          <span class="tab-text">Activities</span>
+        </ng-template>
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-activity-list [tripId]="data.id"></app-activity-list>
+          </div>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  }
+</div>
