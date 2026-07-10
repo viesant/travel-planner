@@ -55,32 +55,32 @@
         </div>
 
         <div class="form-row">
-          <mat-form-field appearance="outline" class="form-field-half" (click)="startPicker.open()">
+          <mat-form-field appearance="outline" class="form-field-half">
             <mat-label>Check-in Date</mat-label>
             <input
               matInput
               formControlName="checkInDate"
               [matDatepicker]="startPicker"
-              placeholder="Choose a date"
+              placeholder="dd/mm/yyyy"
             />
             <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
-            <mat-datepicker #startPicker [touchUi]="true"></mat-datepicker>
+            <mat-datepicker #startPicker></mat-datepicker>
             @if (accommodationForm.get('checkInDate')?.hasError('required')) {
               <mat-error>Check-in date is required.</mat-error>
             }
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="form-field-half" (click)="endPicker.open()">
+          <mat-form-field appearance="outline" class="form-field-half">
             <mat-label>Check-out Date</mat-label>
             <input
               matInput
               [matDatepicker]="endPicker"
               formControlName="checkOutDate"
               [min]="accommodationForm.get('checkInDate')?.value"
-              placeholder="Choose a date"
+              placeholder="dd/mm/yyyy"
             />
             <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
-            <mat-datepicker #endPicker [touchUi]="true"></mat-datepicker>
+            <mat-datepicker #endPicker></mat-datepicker>
             @if (accommodationForm.get('checkOutDate')?.hasError('required')) {
               <mat-error>Check-out date is required.</mat-error>
             }

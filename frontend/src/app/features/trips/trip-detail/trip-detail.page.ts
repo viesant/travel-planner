@@ -60,7 +60,6 @@ export class TripDetailPage implements OnInit {
     this.tripService.findById(numericId).subscribe({
       next: (trip: Trip) => {
         this.trip.set(trip);
-        console.log(this.trip());
         this.isLoading.set(false);
       },
       error: (error: HttpErrorResponse) => {

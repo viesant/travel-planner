@@ -60,7 +60,6 @@ export class TransportListComponent implements OnInit {
       next: (data: Transport[]) => {
         this.rawTransports.set(data);
         this.isLoading.set(false);
-        console.log(this.rawTransports());
       },
       error: (error: HttpErrorResponse) => {
         const problem: ProblemDetails = error.error;

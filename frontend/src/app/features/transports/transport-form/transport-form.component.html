@@ -101,15 +101,20 @@
                 matInput
                 [matDatepicker]="depDate"
                 formControlName="departureDate"
-                placeholder="MM/dd/yyyy"
+                placeholder="dd/mm/yyyy"
               />
               <mat-datepicker-toggle matIconSuffix [for]="depDate"></mat-datepicker-toggle>
-              <mat-datepicker #depDate [touchUi]="true"></mat-datepicker>
+              <mat-datepicker #depDate></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
               <mat-label>Departure Time</mat-label>
-              <input matInput [matTimepicker]="depTime" formControlName="departureTime" />
+              <input
+                matInput
+                [matTimepicker]="depTime"
+                formControlName="departureTime"
+                placeholder="hh:mm"
+              />
               <mat-timepicker-toggle matIconSuffix [for]="depTime"></mat-timepicker-toggle>
               <mat-timepicker interval="15min" #depTime></mat-timepicker>
             </mat-form-field>
@@ -122,16 +127,21 @@
                 matInput
                 [matDatepicker]="arrDate"
                 formControlName="arrivalDate"
-                placeholder="MM/dd/yyyy"
-                [min]="transportForm.get('departureDateTime')?.value"
+                placeholder="dd/mm/yyyy"
+                [min]="transportForm.get('departureDate')?.value"
               />
               <mat-datepicker-toggle matIconSuffix [for]="arrDate"></mat-datepicker-toggle>
-              <mat-datepicker #arrDate [touchUi]="true"></mat-datepicker>
+              <mat-datepicker #arrDate></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
               <mat-label>Arrival Time</mat-label>
-              <input matInput [matTimepicker]="arrTime" formControlName="arrivalTime" />
+              <input
+                matInput
+                [matTimepicker]="arrTime"
+                formControlName="arrivalTime"
+                placeholder="hh:mm"
+              />
               <mat-timepicker-toggle matIconSuffix [for]="arrTime"></mat-timepicker-toggle>
               <mat-timepicker interval="15min" #arrTime></mat-timepicker>
             </mat-form-field>

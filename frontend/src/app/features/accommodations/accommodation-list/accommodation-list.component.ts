@@ -59,7 +59,6 @@ export class AccommodationListComponent implements OnInit {
       next: (data: Accommodation[]) => {
         this.rawAccommodations.set(data);
         this.isLoading.set(false);
-        console.log(this.rawAccommodations());
       },
       error: (error: HttpErrorResponse) => {
         const problem: ProblemDetails = error.error;
